@@ -1,0 +1,242 @@
+[
+    {
+        "id": "1",
+        "title": "Low Pressure Connectors",
+        "content": "Fittings, tubing, valves, couplers, guns & accessories for pneumatics & low pressure fluid transfer",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "2",
+        "title": "Pneumatics",
+        "content": "Cylinders, air preparation units & control devices for pneumatic automation",
+        "path": "/pneumatics"
+    },
+    {
+        "id": "3",
+        "title": "Hydraulic Hose & Fittings",
+        "content": "Comprehensive range of hydraulic & industrial hose & tube assemblies & fittings",
+        "path": "/hydraulics"
+    },
+    {
+        "id": "4",
+        "title": "Transair Product",
+        "content": "Comprehensive range of hydraulic & industrial hose & tube assemblies & fittings",
+        "path": "/transair"
+    },
+    {
+        "id": "5",
+        "title": "Compressed Air Piping Systems",
+        "content": "Transair aluminum piping system for efficient distribution of air & inert gases",
+        "path": "/compressed-air-and-gas-treatment"
+    },
+    {
+        "id": "6",
+        "title": "Push-In Fittings",
+        "content": "Push-in fittings are essential for quick, tool-free connections in pneumatic circuits and compressed air systems. These fittings provide secure, leak proof, and durable connections for fluid and air transfer.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "7",
+        "title": "Technical Tubes and Hoses",
+        "content": "High-performance tubes and hoses ensure consistent and efficient fluid transmission, handling compressed air, hydraulic fluids, and industrial gases.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "8",
+        "title": "Function Fittings",
+        "content": "Function fittings regulate airflow, pressure, and system safety, optimizing pneumatic circuits for enhanced performance.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "9",
+        "title": "Compression Fittings",
+        "content": "Compression fittings create secure and leak-proof connections in low-pressure hydraulic and pneumatic applications, ensuring high mechanical strength and easy assembly.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "10",
+        "title": "Transportation Fittings",
+        "content": "Specialized fittings designed for fluid and air connections in automotive, railway, and heavy vehicle industries.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "11",
+        "title": "Transportation Tubings",
+        "content": "High-performance tubing solutions for automotive and industrial transport sectors, ensuring efficient and safe fluid distribution.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "12",
+        "title": "Industrial Ball Valves",
+        "content": "Ball valves provide precise flow control, shut-off, and system protection, ensuring durability in industrial fluid management.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "13",
+        "title": "Energy-Saving Air Blow Guns",
+        "content": "Blow guns optimize compressed air usage, ensuring efficient cleaning, cooling, and drying operations while reducing air consumption.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "14",
+        "title": "Adapters and Manifolds",
+        "content": "Adapters and manifolds provide secure and flexible multi-port connections, allowing efficient distribution of compressed air and industrial fluids.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "15",
+        "title": "Axial Valves and Needle Valves",
+        "content": "Axial and needle valves enable precise flow control and pressure adjustment, ensuring smooth operation in pneumatic and hydraulic circuits.",
+        "path": "/low-pressure-product"
+    },
+    {
+        "id": "16",
+        "title": "Industries",
+        "path": "/industries",
+        "content": ""
+    },
+    {
+        "id": "17",
+        "title": "Manufacturing",
+        "content": "Thermoplastic Tubing Extrusion",
+        "path": "/manufacturing"
+    },
+    {
+        "id": "18",
+        "title": "FRL (Filter, Regulator & Lubricator)",
+        "content": "FRLs ensure clean, dry, and regulated air supply, improving system efficiency and longevity. These units remove contaminants, stabilize pressures, and provide lubrication – ensuring smooth pneumatic operations.",
+        "path": "/pneumatics"
+    },
+    {
+        "id": "19",
+        "title": "Quick Release Couplers",
+        "content": "Quick Release Couplers provide instant connections and disconnections, improving operational efficiency and safety. These couplers are used in pneumatic and hydraulic applications, ensuring leak-proof performance and energy efficiency.",
+        "path": "/pneumatics"
+    },
+    {
+        "id": "20",
+        "title": "Pneumatic Cylinders",
+        "content": "Pneumatic cylinders convert compressed air into mechanical force, providing precise linear motion for automation systems. These actuators play a crucial role in lifting, positioning, pushing, and clamping applications.",
+        "path": "/pneumatics"
+    },
+    {
+        "id": "21",
+        "title": "Solenoid Valves",
+        "content": "Solenoid valves are electromechanically controlled devices that regulate compressed air, water, oil, and gas flow. These valves enable automation of fluid control with high-speed response and leak-proof operation.",
+        "path": "/pneumatics"
+    },
+    {
+        "id": "22",
+        "title": "Hydraulic Hoses",
+        "content": "Hydraulic hoses transport high-pressure fluids while maintaining flexibility, durability, and leak resistance.",
+        "path": "/hydraulics"
+    },
+    {
+        "id": "23",
+        "title": "Hydraulic Fittings",
+        "content": "Hydraulic fittings enable secure and leak-proof connections, ensuring fluid containment and high-pressure integrity.",
+        "path": "/hydraulics"
+    },
+    {
+        "id": "24",
+        "title": "Hydraulic Couplers",
+        "content": "Hydraulic couplers provide fast and leak-free connections, allowing quick attachment and detachment of hoses and pipes.",
+        "path": "/hydraulics"
+    },
+    {
+        "id": "25",
+        "title": "Ball Valves and Non-Return Valves",
+        "content": "Ball valves and non-return valves control fluid flow, pressure regulation, and backflow prevention in hydraulic systems.",
+        "path": "/hydraulics"
+    },
+    {
+        "id": "26",
+        "title": "Seamless Hydraulic Pipes",
+        "content": "Seamless hydraulic pipes provide high-strength, precise fluid transfer in high-pressure environments.",
+        "path": "/hydraulics"
+    },
+    {
+        "id": "27",
+        "title": "Energy-Saving Transair Pipes & Fittings",
+        "content": "Transair energy-saving pipes and fittings are designed to improve efficiency and reduce operational costs, making them the ideal choice for compressed air networks.",
+        "path": "/transair"
+    },
+    {
+        "id": "28",
+        "title": "Hose Reels",
+        "content": "Transair hose reels offer efficient and organized hose management, ensuring easy access, tangle-free storage, and prolonged hose lifespan.",
+        "path": "/transair"
+    },
+    {
+        "id": "29",
+        "title": "Refrigeration Dryers",
+        "content": "Push-in fittings are essential for quick, tool-free connections in pneumatic circuits and compressed air systems. These fittings provide secure, leak proof, and durable connections for fluid and air transfer.",
+        "path": "/compressed-air-and-gas-treatment"
+    },
+    {
+        "id": "30",
+        "title": "Desiccant Dryers",
+        "content": "Solenoid valves are electromechanically controlled devices that regulate compressed air, water, oil, and gas flow. These valves enable automated fluid control with high-speed response and leak-proof operation.",
+        "path": "/compressed-air-and-gas-treatment"
+    },
+    {
+        "id": "31",
+        "title": "Filters & Pre-Filters",
+        "content": "Push-in fittings are essential for quick, tool-free connections in pneumatic circuits and compressed air systems. These fittings provide secure, leak proof, and durable connections for fluid and air transfer.",
+        "path": "/compressed-air-and-gas-treatment"
+    },
+    {
+        "id": "32",
+        "title": "Auto Drains & Moisture Separators",
+        "content": "Solenoid valves are electromechanically controlled devices that regulate compressed air, water, oil, and gas flow. These valves enable automated fluid control with high-speed response and leak-proof operation.",
+        "path": "/compressed-air-and-gas-treatment"
+    },
+    {
+        "id": "33",
+        "title": "Pressure Regulators & Accessories",
+        "content": "Push-in fittings are essential for quick, tool-free connections in pneumatic circuits and compressed air systems. These fittings provide secure, leak proof, and durable connections for fluid and air transfer.",
+        "path": "/compressed-air-and-gas-treatment"
+    },
+    {
+        "id": "34",
+        "title": "Gas Generators",
+        "content": "Solenoid valves are electromechanically controlled devices that regulate compressed air, water, oil, and gas flow. These valves enable automated fluid control with high-speed response and leak-proof operation.",
+        "path": "/compressed-air-and-gas-treatment"
+    },
+    {
+        "id": "35",
+        "title": "Tube Thermoforming",
+        "content": "We specialize in tube thermoforming with a steam vulcanization process to create custom shapes and configurations from thermoplastic materials. Our process ensures exceptional accuracy, strength, and uniformity, making it ideal for applications in automotive & industrial systems.",
+        "path": "/manufacturing"
+    },
+    {
+        "id": "36",
+        "title": "CNC Machining",
+        "content": "Our CNC machining services deliver high-precision parts for industries requiring tight tolerances and complex geometries. From prototypes to full-scale production, we utilize cutting-edge equipment to ensure accuracy and efficiency.",
+        "path": "/manufacturing"
+    },
+    {
+        "id": "37",
+        "title": "Injection Molding",
+        "content": "We produce high-quality plastic components with complex designs, meeting the demands of industries such as automotive, electronics, and consumer goods. By working closely with our customers through the product development cycle, we are a partner from ideation, prototyping till production.",
+        "path": "/manufacturing"
+    },
+    {
+        "id": "38",
+        "title": "Hose Assembly",
+        "content": "We provide complete hose assembly solutions for hydraulic, pneumatic, and industrial applications. With in-house manufacturing of hose fittings & a stringent control & testing process, we provide bulk hose assemblies to OEMs across industries including railways, defense, agriculture, off-highway & industrial. Our assemblies are engineered for optimal durability, performance, and compatibility.",
+        "path": "/manufacturing"
+    },
+    {
+        "id": "39",
+        "title": "Metal Tube Bending & Assembly",
+        "content": "Our metal tube bending and assembly services ensure precision and consistency for complex projects. We work with various materials, including stainless steel, aluminum, and brass, to create bent tubes and assemblies for critical applications.",
+        "path": "/manufacturing"
+    },
+    {
+        "id": "40",
+        "title": "Pneumatic Cylinder Assembly",
+        "content": "With an in-house cylinder stroking unit & a tool room, we can deliver standard & customized pneumatic cylinders at short lead times. From standard ISO 15552 profiles to pencil or compact cylinders, our exhaustive range of cylinders along with a complete range of automation & accessory products makes us an ideal partner for pneumatic solutions.",
+        "path": "/manufacturing"
+    }
+]
