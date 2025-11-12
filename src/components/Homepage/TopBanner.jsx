@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Banner1 from "../../assets/header/Banner1.jpg";
-import Banner2 from "../../assets/header/Banner2.jpg";
-import Banner3 from "../../assets/header/Banner3.jpg";
-import Banner4 from "../../assets/header/Banner4.jpg";
+import Banner2 from "../../assets/header/banner2.jpg";
+import Banner3 from "../../assets/header/banner3.jpg";
+import Banner4 from "../../assets/header/banner4.jpg";
 import logo2 from "../../assets/header/logo2.svg";
 import { NavLink } from "react-router-dom";
 import SearchBox from "../SearchBox/SearchBox";
