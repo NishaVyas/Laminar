@@ -14,7 +14,10 @@ import Packaging from "../../assets/Homepage/Packaging.jpg";
 import Printing from "../../assets/Homepage/Printing.jpg";
 import ProcessIndustry from "../../assets/Homepage/Process-Industry.jpg";
 import Textile from "../../assets/Homepage/Textile.jpg";
-
+import Semiconductor from "../../assets/Homepage/semiconductor.jpeg";
+import DataCenter from "../../assets/Homepage/data-center.jpeg";
+import Renewable from "../../assets/Homepage/renewable-energy.jpeg";
+import Ev from "../../assets/Homepage/ev.jpeg";
 const Industries = () => {
   const scrollRef = useRef(null);
   const cardRef = useRef(null);
@@ -79,6 +82,26 @@ const Industries = () => {
       image: Textile,
       title: "Textile",
       desc: "Enhancing textile manufacturing with specialized fluid solutions that ensure seamless processing and production efficiency.",
+    },
+     {
+      image: Semiconductor,
+      title: "Semiconductor",
+      desc: "High-performance pneumatic and fluid control solutions offering reliability, speed, and contamination-free operation — from cleanroom-compliant components to precision systems.",
+    },
+    {
+      image: DataCenter,
+      title: "Data center",
+      desc: "High-performance fluid connector solutions engineered for precise, leak-free, and efficient fluid transfer in hyperscale and edge computing environments.",
+    },
+    {
+      image: Renewable,
+      title: "Renewable Energy",
+      desc: "Powering renewable energy with rugged, high-performance fluid and motion solutions—from wind to solar to hydrogen.",
+    },
+    {
+      image: Ev,
+      title: "EV",
+      desc: "Fluid and motion solutions engineered for EV cooling, charging, and high-voltage safety",
     },
   ];
 

@@ -72,7 +72,7 @@ const categoriesData = [
     benefits: [
       "Abrasion-resistant and chemical-proof materials",
       "Flexible yet rigid designs for optimized performance",
-      <>Withstands high-pressure environments without compromising  flow efficiency</>,
+      <>Withstands high-pressure environments without compromising flow efficiency</>,
     ],
     image: tubes2,
     url: "https://laminarindia.com/Website%20PDFs/Low%20pressure/techtubes.pdf",
@@ -287,12 +287,11 @@ const Categories = () => {
                 </div>
               </div>
 
-              {/* Download Catalog Button */}
+              {/* Open Catalog Button (no download attribute) */}
               <a
                 href={category.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                download
                 className="mt-6 bg-[#0061A6] w-40 md:w-44 cursor-pointer hover:bg-[#005089] text-white text-xs font-medium py-2.5 md:py-3 px-8 md:px-10 flex justify-center items-center"
               >
                 See Catalog

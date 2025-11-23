@@ -10,7 +10,10 @@ import Packaging from "../../assets/Industries/Packaging.png";
 import Printing from "../../assets/Industries/Printing.png";
 import process from "../../assets/Industries/process.png";
 import Automation from "../../assets/Industries/Automation.png";
-
+import Semiconductor from "../../assets/Industries/semiconductor.jpeg";
+import DataCenter from "../../assets/Industries/data-center.jpeg";
+import  Renewable from "../../assets/Industries/renewable-energy.jpeg";
+import Ev from "../../assets/Industries/ev.jpeg";
 function Cards() {
   const industries = [
     { name: "Automation", image: Automation },
@@ -25,6 +28,10 @@ function Cards() {
     { name: "Packaging", image: Packaging },
     { name: "Printing", image: Printing },
     { name: "Process", image: process },
+    { name: "Semiconductor", image: Semiconductor },
+    { name: "Data center", image: DataCenter },
+    { name: "Renewable Energy", image: Renewable },
+    { name: "EV", image: Ev },
   ];
 
   return (
