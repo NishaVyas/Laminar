@@ -10,24 +10,24 @@ import Pipe from "../../assets/Product/Pipe.svg";
 const productList = [
   {
     title: "Low Pressure Solutions",
-    desc: "Delivering precision-engineered fittings, hoses, and valves, our low-pressure solutions ensure optimal fluid flow and energy efficiency in various industrial applications.",
+    desc: "Delivering precision-engineered fittings, tubes, and valves, our low-pressure solutions ensure optimal fluid flow and energy efficiency in various industrial applications.",
     image: P1,
     link: "/low-pressure-product",
   },
   {
     title: "Pneumatics Solutions",
-    desc: "From FRLs to solenoid valves, our pneumatic automation solutions provide seamless airflow control, durability, and high-speed performance for industrial automation.",
+    desc: "From FRLs to pneumatic cylinders, our pneumatic automation solutions provide seamless airflow control, durability, and high-speed performance for industrial automation.",
     image: P2,
     link: "/pneumatics",
   },
   {
     title: "Hydraulics Solutions",
-    desc: "Built for high-pressure environments, our hydraulic hoses, fittings, and couplers ensure smooth power transmission and reliable leak-proof connections across industries.",
+    desc: "Built for high-pressure environments, our hydraulic hoses, fittings, and couplers enable smooth power transmission and leak-proof connections across industries.",
     image: P3,
     link: "/hydraulics",
   },
   {
-    title: "Transair Product",
+    title: "Transair Piping",
     desc: "Revolutionizing compressed air and gas distribution, our Transair piping systems and hose reels offer lightweight, corrosion-resistant, and energy-efficient performance.",
     image: Pipe,
     link: "/transair",

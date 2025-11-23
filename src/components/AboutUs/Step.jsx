@@ -10,27 +10,20 @@ function Step() {
                     at every step.
                 </h2>
                 <p className="mt-4 mb-6 text-base md:text-sm text-gray-700 leading-relaxed">
-                    Laminar serves diversified end markets in the fluid power segment with its core
-                    product categories of low-pressure connectors, pneumatics, hose & fittings,
-                    industrial piping & industrial air filtration solution
+                    Laminar serves diversified end markets in the fluid power segment with its core product categories of low-pressure connectors, pneumatics, hose & fittings, industrial piping & industrial air filtration solution.
                     <br />
                 </p>
                 <p className="mt-4 mb-6 text-base md:text-sm text-gray-700 leading-relaxed">
-                    As Parker Hannifin’s leading distributor & value-add partner, Laminar has decades of
-                    experience & the market expertise to execute projects with cutting-edge solutions.
+                    Today, we serve global customers through product excellence, scalable infrastructure & a commitment to international quality standards, & have forged long term partnerships across geographies & borders.
                 </p>
                 <p className="mt-4 mb-6 text-base md:text-sm text-gray-700 leading-relaxed">
-                    With our strong & certified manufacturing footprint in plastic extrusion, injection
-                    molding, machining, hose & tube assembly, we have the operational agility & excellence
-                    to meet stringent industrial regulations & deliver bespoke solutions for critical
-                    applications.
+                    As Parker Hannifin’s leading distributor & value-add partner, Laminar has decades of experience & the market expertise to execute projects with cutting-edge solutions.
                 </p>
                 <p className="mt-0 text-base md:text-sm text-gray-700 leading-relaxed mb-10">
-                    Our strengths in R&D, strategic sourcing, designing & execution give us the ability to
-                    adapt & be at pace with the ever-evolving end markets that we serve. Our resourceful &
-                    highly motivated team ensures that we live up to our motto of keeping our customers’
-                    businesses moving by providing high-quality products at the best in industry lead
-                    times!
+                    With our strong & certified manufacturing footprint in plastic extrusion, injection molding, machining, hose & tube assembly, we have the operational agility & excellence to meet stringent industrial regulations & deliver bespoke solutions for critical applications. Our strengths in R&D, strategic sourcing, designing & execution give us the ability to adapt & be at pace with the ever-evolving end markets that we serve. 
+                </p>
+                <p className="mt-0 text-base md:text-sm text-gray-700 leading-relaxed mb-10">
+                    Our resourceful & highly motivated team ensures that we live up to our motto of keeping our customers businesses moving by providing high quality products at the best in industry lead times.
                 </p>
             </div>
         </section>
