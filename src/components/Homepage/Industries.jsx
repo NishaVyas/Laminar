@@ -21,6 +21,13 @@ import DataCenter from "../../assets/Homepage/data-center.jpeg";
 import Renewable from "../../assets/Homepage/renewable-energy.jpeg";
 import Ev from "../../assets/Homepage/ev.jpeg";
 
+// Default section heading
+const defaultHeading = {
+  title: "Industries We",
+  desc: "Serve",
+  subtitle: "Empowering diverse industries with high-performance fluid connection solutions, we ensure efficiency, reliability, and seamless operations across multiple sectors.",
+};
+
 // Fallback industries data (original hardcoded content)
 const fallbackIndustries = [
   {
@@ -116,8 +123,25 @@ const Industries = () => {
     transformIndustries
   );
 
+  // Fetch section heading from API
+  const { data: sectionHeadingData } = useApiData(
+    "/api/home?type=industry-section-heading",
+    null,
+    (data) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return {
+          title: data[0].title || defaultHeading.title,
+          desc: data[0].description || defaultHeading.desc,
+          subtitle: data[0].value || defaultHeading.subtitle,
+        };
+      }
+      return null;
+    }
+  );
+
   // Use API data if available, otherwise use fallback
   const industries = apiIndustries || fallbackIndustries;
+  const sectionHeading = sectionHeadingData || defaultHeading;
 
   const scroll = (direction) => {
     if (scrollRef.current && cardRef.current) {
@@ -142,8 +166,8 @@ const Industries = () => {
 
         <div className="relative mb-4">
           <h2 className="text-xl sm:text-2xl lg:text-4xl text-left sm:text-center text-[#001f3f]">
-            Industries We{" "}
-            <span className="text-[#0061A6] font-bold">Serve</span>
+            {sectionHeading.title}{" "}
+            <span className="text-[#0061A6] font-bold">{sectionHeading.desc}</span>
           </h2>
 
           {/* Desktop / Tablet arrows (unchanged layout) */}
@@ -173,10 +197,7 @@ const Industries = () => {
 
         {/* Description */}
         <p className="text-xs sm:text-sm text-gray-700 text-left sm:text-center max-w-4xl mx-0 sm:mx-auto mb-4 sm:mb-10">
-          Empowering diverse industries with high-performance fluid connection
-          solutions, we ensure efficiency, reliability, and
-          <br className="hidden sm:block" /> seamless operations across multiple
-          sectors.
+          {sectionHeading.subtitle}
         </p>
 
         {/* Mobile-only arrows: right aligned, smaller, after description */}

@@ -1,17 +1,20 @@
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useApiData, transformStory } from "../../hooks/useApiData";
 // Fallback assets
-import video from "../../assets/Homepage/Laminar.mp4";
+import fallbackVideo from "../../assets/Homepage/Laminar.mp4";
 
 // Fallback story data (original hardcoded content)
 const fallbackStory = {
   title: "Our Story",
   description: "Laminar serves diversified end markets in the fluid power segment with its core product categories of low-pressure connectors, pneumatics, hose & fittings, industrial piping & industrial air filtration.",
-  videoUrl: video,
+  videoUrl: fallbackVideo,
   link: "/about-us",
 };
 
 const Story = () => {
+  const [videoError, setVideoError] = useState(false);
+
   // Fetch story data from API with fallback
   const { data: apiStory } = useApiData(
     "/api/home?type=story",
@@ -21,6 +24,14 @@ const Story = () => {
 
   // Use API data if available, otherwise use fallback
   const storyData = apiStory || fallbackStory;
+
+  // Reset error state when API data changes
+  useEffect(() => {
+    setVideoError(false);
+  }, [apiStory?.videoUrl]);
+
+  // Determine the video URL to use - if API video fails or is empty, use fallback
+  const videoSrc = (!videoError && storyData.videoUrl) ? storyData.videoUrl : fallbackVideo;
 
   return (
     <section className="bg-gray-50 pb-16">
@@ -47,13 +58,15 @@ const Story = () => {
         {/* Right Column: Video */}
         <div className="w-full md:w-1/2 flex justify-center">
           <video
+            key={videoSrc}
             className="w-full h-auto"
             autoPlay
             loop
             muted
             playsInline
+            src={videoSrc}
+            onError={() => setVideoError(true)}
           >
-            <source src={storyData.videoUrl || video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

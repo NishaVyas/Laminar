@@ -38,9 +38,9 @@ const fallbackIndustries = [
 ];
 
 function Cards() {
-  // Fetch industries data from API with fallback
+  // Fetch industries data from API with fallback (same data as homepage industries)
   const { data: apiIndustries } = useApiData(
-    "/api/home?type=industries-content",
+    "/api/home?type=industry",
     null,
     transformIndustries
   );

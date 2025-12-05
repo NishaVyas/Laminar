@@ -107,10 +107,11 @@ export function transformAbout(apiData) {
  * Transform API story data to match frontend structure
  */
 export function transformStory(apiData) {
-  if (!apiData && !Array.isArray(apiData)) return null;
+  if (!apiData || (Array.isArray(apiData) && apiData.length === 0)) return null;
 
-  // If it's an array, get the first item
-  const item = Array.isArray(apiData) ? apiData[0] : apiData;
+  // If it's an array, get the last item (most recently added)
+  // API returns items sorted by createdAt ascending, so last = newest
+  const item = Array.isArray(apiData) ? apiData[apiData.length - 1] : apiData;
   if (!item) return null;
 
   return {
@@ -150,14 +151,35 @@ export function transformIndustries(apiData) {
 
 /**
  * Transform API accreditations data
+ * Accreditation items have a clients array with logos
  */
 export function transformAccreditations(apiData) {
   if (!Array.isArray(apiData) || apiData.length === 0) return null;
 
-  return apiData.map(item => ({
-    title: item.title || "",
-    image: getImageUrl(item.imageUrl),
-  }));
+  // Collect all client logos from all accreditation items
+  const allAccreditations = [];
+
+  apiData.forEach(item => {
+    // Check if item has clients array (new format from admin)
+    if (item.clients && Array.isArray(item.clients)) {
+      item.clients.forEach(client => {
+        if (client.logoUrl || client.name) {
+          allAccreditations.push({
+            title: client.name || "",
+            image: getImageUrl(client.logoUrl),
+          });
+        }
+      });
+    } else if (item.imageUrl) {
+      // Fallback: direct imageUrl on item (old format)
+      allAccreditations.push({
+        title: item.title || "",
+        image: getImageUrl(item.imageUrl),
+      });
+    }
+  });
+
+  return allAccreditations.length > 0 ? allAccreditations : null;
 }
 
 /**

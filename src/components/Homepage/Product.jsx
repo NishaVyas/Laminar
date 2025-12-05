@@ -77,6 +77,12 @@ const Autoplay = (slider) => {
   slider.on("updated", nextTimeout);
 };
 
+// Default section heading
+const defaultHeading = {
+  title: "Partner With Us For Cutting-Edge",
+  desc: "Fluid Solutions",
+};
+
 export default function Products() {
   // Fetch product data from API with fallback
   const { data: apiProducts } = useApiData(
@@ -85,8 +91,24 @@ export default function Products() {
     transformProducts
   );
 
+  // Fetch section heading from API
+  const { data: sectionHeadingData } = useApiData(
+    "/api/home?type=product-section-heading",
+    null,
+    (data) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return {
+          title: data[0].title || defaultHeading.title,
+          desc: data[0].description || defaultHeading.desc,
+        };
+      }
+      return null;
+    }
+  );
+
   // Use API data if available, otherwise use fallback
   const productList = apiProducts || fallbackProductList;
+  const sectionHeading = sectionHeadingData || defaultHeading;
 
   const [sliderRef, slider] = useKeenSlider(
     {
@@ -120,12 +142,12 @@ export default function Products() {
         <div className="text-left md:text-center mb-12">
           <p className="text-sm text-gray-900 mb-2">P R O D U C T S</p>
           <h2 className="text-2xl md:text-3xl text-gray-800 leading-snug">
-            Partner With Us For{" "}
+            {sectionHeading.title.split(" ").slice(0, -1).join(" ")}{" "}
             <span className="text-[#0061A6] font-semibold">
-              Cutting-Edge
+              {sectionHeading.title.split(" ").slice(-1)[0]}
             </span>
             <br className="hidden md:block" />
-            Fluid Solutions
+            {sectionHeading.desc}
           </h2>
         </div>
 

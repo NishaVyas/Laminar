@@ -41,6 +41,12 @@ const fallbackOperations = [
   },
 ];
 
+// Default section heading
+const defaultHeading = {
+  title: "Manufacturing",
+  desc: "Operations",
+};
+
 const Manufacturing = () => {
   // Fetch operations data from API with fallback
   const { data: apiOperations } = useApiData(
@@ -49,8 +55,24 @@ const Manufacturing = () => {
     transformOperations
   );
 
+  // Fetch section heading from API
+  const { data: sectionHeadingData } = useApiData(
+    "/api/home?type=operation-section-heading",
+    null,
+    (data) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return {
+          title: data[0].title || defaultHeading.title,
+          desc: data[0].description || defaultHeading.desc,
+        };
+      }
+      return null;
+    }
+  );
+
   // Use API data if available, otherwise use fallback
   const operations = apiOperations || fallbackOperations;
+  const sectionHeading = sectionHeadingData || defaultHeading;
 
   return (
     <section className="py-16 bg-gray-50">
@@ -63,8 +85,8 @@ const Manufacturing = () => {
           M A N U F A C T U R I N G
         </p>
         <h2 className="text-2xl lg:text-3xl text-left md:text-center text-[#001f3f] mb-12">
-          Manufacturing{" "}
-          <span className="text-[#0061A6] font-bold">Operations</span>
+          {sectionHeading.title}{" "}
+          <span className="text-[#0061A6] font-bold">{sectionHeading.desc}</span>
         </h2>
       </div>
 
