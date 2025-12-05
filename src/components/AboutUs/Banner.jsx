@@ -1,12 +1,32 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "../../layouts/Header";
+import { useApiData, transformBanners } from "../../hooks/useApiData";
+// Fallback images
 import banner1 from "../../assets/AboutUs/banner1.jpg";
 import banner2 from "../../assets/AboutUs/banner2.jpg";
 import banner3 from "../../assets/AboutUs/banner3.jpg";
 import banner4 from "../../assets/AboutUs/banner4.jpg";
 
+// Fallback banner data (original hardcoded content)
+const fallbackBannerData = [
+    { image: banner1, title: "Delivering Trust", desc: "Crafting Excellence" },
+    { image: banner2, title: "Revolutionizing Industries", desc: "Redefining Standards" },
+    { image: banner3, title: "Built for Reliability", desc: "Driven by Innovation" },
+    { image: banner4, title: "Powering connected future", desc: "Pioneering Precision" },
+];
+
 const Banner = () => {
-    const banners = [banner1, banner2, banner3, banner4];
+    // Fetch banner data from API
+    const { data: apiBanners } = useApiData(
+        "/api/home?type=aboutus-banner",
+        null,
+        transformBanners
+    );
+
+    // Use API data if available, otherwise use fallback
+    const bannerData = apiBanners || fallbackBannerData;
+    const bannerImages = bannerData.map(b => b.image);
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const intervalRef = useRef(null);
 
@@ -14,12 +34,12 @@ const Banner = () => {
     useEffect(() => {
         startAutoSlide();
         return () => clearInterval(intervalRef.current);
-    }, []);
+    }, [bannerImages.length]);
 
     const startAutoSlide = () => {
         clearInterval(intervalRef.current);
         intervalRef.current = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
         }, 4000);
     };
 
@@ -27,25 +47,6 @@ const Banner = () => {
         setCurrentIndex(index);
         startAutoSlide(); // Reset timer on manual click
     };
-
-    const bannerInfo = [
-        {
-            title: "Delivering Trust",
-            desc: "Crafting Excellence",
-        },
-        {
-            title: "Revolutionizing Industries",
-            desc: "Redefining Standards",
-        },
-        {
-            title: "Built for Reliability",
-            desc: "Driven by Innovation",
-        },
-        {
-            title: "Powering connected future",
-            desc: "Pioneering Precision",
-        },
-    ];
 
     return (
         <>
@@ -55,7 +56,7 @@ const Banner = () => {
                 {/* MOBILE VIEW – full image, not cropped, no progress bars */}
                 <div className="block md:hidden relative">
                     <img
-                        src={banners[currentIndex]}
+                        src={bannerImages[currentIndex]}
                         alt="Banner"
                         className="w-full h-auto block"
                     />
@@ -65,13 +66,13 @@ const Banner = () => {
                 {/* DESKTOP / LAPTOP VIEW – original style with background image & progress bars */}
                 <div
                     className="hidden md:block relative w-full h-175 bg-cover bg-center pt-20 transition-all duration-700 ease-in-out"
-                    style={{ backgroundImage: `url(${banners[currentIndex]})` }}
+                    style={{ backgroundImage: `url(${bannerImages[currentIndex]})` }}
                 >
                     <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-black to-transparent z-0" />
 
                     <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col justify-end h-full">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm pb-8">
-                            {bannerInfo.map((item, index) => (
+                            {bannerData.map((item, index) => (
                                 <div
                                     key={index}
                                     onClick={() => handleClick(index)}

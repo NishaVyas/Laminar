@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useApiData, transformClients } from "../../hooks/useApiData";
 import about from "../../assets/Homepage/About.svg";
+// Fallback images
 import img1 from "../../assets/clients/1.png";
 import img2 from "../../assets/clients/2.png";
 import img3 from "../../assets/clients/3.png";
@@ -40,7 +42,8 @@ import img37 from "../../assets/clients/37.png";
 import img38 from "../../assets/clients/38.png";
 import img39 from "../../assets/clients/39.png";
 
-const initialLogos = [
+// Fallback client logos (original hardcoded content)
+const fallbackLogos = [
     { src: img1, alt: "Client 1" },
     { src: img2, alt: "Client 2" },
     { src: img3, alt: "Client 3" },
@@ -83,8 +86,25 @@ const initialLogos = [
 ];
 
 const Clients = () => {
+    // Fetch clients data from API with fallback
+    const { data: apiClients } = useApiData(
+        "/api/home?type=clients",
+        null,
+        transformClients
+    );
+
+    // Use API data if available, otherwise use fallback
+    const initialLogos = apiClients || fallbackLogos;
+
     const [logos, setLogos] = useState(initialLogos);
     const cellRefs = useRef({});
+
+    // Update logos when API data is loaded
+    useEffect(() => {
+        if (apiClients) {
+            setLogos(apiClients);
+        }
+    }, [apiClients]);
 
     const shuffleMultipleLogos = () => {
         const positions = {};

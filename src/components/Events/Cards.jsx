@@ -1,3 +1,6 @@
+import { NavLink } from "react-router-dom";
+import { useApiData, transformEvents } from "../../hooks/useApiData";
+// Fallback images
 import hm from "../../assets/Homepage/hm.svg";
 import amf from "../../assets/Homepage/amf.svg";
 import expo from "../../assets/Homepage/expo.svg";
@@ -6,51 +9,61 @@ import arrow from "../../assets/Homepage/arrow.svg";
 import Calendar from "../../assets/Homepage/Calendar.svg";
 import iree from "../../assets/Events/iree.svg";
 import Map from "../../assets/Homepage/Map.svg";
-import { NavLink } from "react-router-dom";
+
+// Fallback events data (original hardcoded content)
+const fallbackEvents = [
+  {
+    image: hm,
+    title: "Hannover Messe Exhibition 2024",
+    description:
+      "We showcased thermoplastic tubing & hoses for industrial, mobile, and DIY applications, connecting with industry experts from around the world.",
+    details: "Hall 5, Stand A16/1, Hannover Exhibition Ground, Germany",
+    date: "April 22nd - 26th, 2024",
+  },
+  {
+    image: expo2025,
+    title: "Fluid Power Expo 2025",
+    description:
+      "At Fluid Power Expo 2025, we highlighted next-gen fluid power solutions, helping businesses enhance competitiveness through change.",
+    details: "Pragati Maidan, New Delhi, India",
+    date: "Feb 16th - 18th, 2025",
+  },
+  {
+    image: amf,
+    title: "Automechanika Frankfurt Expo 2024",
+    description:
+      "A global platform where we presented our innovative hydraulic and pneumatic solutions for the automotive and manufacturing industries.",
+    details: "Hall 6.2, Stall F99B, Messe Frankfurt, Germany",
+    date: "Sept 10th - 14th, 2024",
+  },
+  {
+    image: iree,
+    title: "IREE 2023",
+    description:
+      "As a key exhibitor, we showcased our railway fluid connection technologies, driving advancements in railway equipment and infrastructure.",
+    details: "Hall A5, Stall 5.86A, Pragati Maidan, New Delhi",
+    date: "Oct 12th - 14th, 2023",
+  },
+  {
+    image: expo,
+    title: "Automation Expo 2023",
+    description:
+      "A landmark event where we introduced high-performance fluid automation systems, reinforcing our leadership in industrial automation.",
+    details: "BEC, Hall 1, Goregaon East, Mumbai",
+    date: "Aug 23rd - 26th, 2023",
+  },
+];
 
 const Cards = () => {
-  const events = [
-    {
-      image: hm,
-      title: "Hannover Messe Exhibition 2024",
-      description:
-        "We showcased thermoplastic tubing & hoses for industrial, mobile, and DIY applications, connecting with industry experts from around the world.",
-      details: <>Hall 5, Stand A16/1, Hannover Exhibition Ground, Germany</>,
-      date: "April 22nd - 26th, 2024",
-    },
-    {
-      image: expo2025,
-      title: "Fluid Power Expo 2025",
-      description:
-        "At Fluid Power Expo 2025, we highlighted next-gen fluid power solutions, helping businesses enhance competitiveness through change.",
-      details: <>Pragati Maidan, New Delhi, <br /> India</>,
-      date: "Feb 16th - 18th, 2025",
-    },
-    {
-      image: amf,
-      title: "Automechanika Frankfurt Expo 2024",
-      description:
-        "A global platform where we presented our innovative hydraulic and pneumatic solutions for the automotive and manufacturing industries.",
-      details: <>Hall 6.2, Stall F99B, Messe Frankfurt, <br /> Germany</>,
-      date: "Sept 10th - 14th, 2024",
-    },
-    {
-      image: iree,
-      title: "IREE 2023",
-      description:
-        "As a key exhibitor, we showcased our railway fluid connection technologies, driving advancements in railway equipment and infrastructure.",
-      details: <> Hall A5, Stall 5.86A, Pragati Maidan, <br /> New Delhi </>,
-      date: "Oct 12th - 14th, 2023",
-    },
-    {
-      image: expo,
-      title: "Automation Expo 2023",
-      description:
-        "A landmark event where we introduced high-performance fluid automation systems, reinforcing our leadership in industrial automation.",
-      details: <>BEC, Hall 1, Goregaon East, <br /> Mumbai</>,
-      date: "Aug 23rd - 26th, 2023",
-    },
-  ];
+  // Fetch events data from API with fallback
+  const { data: apiEvents } = useApiData(
+    "/api/home?type=events",
+    null,
+    transformEvents
+  );
+
+  // Use API data if available, otherwise use fallback
+  const events = apiEvents || fallbackEvents;
 
   return (
     <section className="py-16 bg-gray-50 min-h-screen">

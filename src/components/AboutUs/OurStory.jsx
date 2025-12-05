@@ -1,5 +1,7 @@
 import { useState } from "react";
 import AboutBg from "../../assets/Homepage/About.svg";
+import { useApiData } from "../../hooks/useApiData";
+// Fallback images
 import image1 from "../../assets/AboutUs/image.png";
 import image2 from "../../assets/AboutUs/image2.png";
 import image3 from "../../assets/AboutUs/image3.png";
@@ -13,7 +15,8 @@ import image10 from "../../assets/AboutUs/image10.png";
 import image11 from "../../assets/AboutUs/image11.png";
 import image12 from "../../assets/AboutUs/image12.png";
 
-const timelineData = [
+// Fallback timeline data (original hardcoded content)
+const fallbackTimelineData = [
   { year: "1992", img: image1, text: "" },
   { year: "1994", img: image2, text: "" },
   { year: "1998", img: image3, text: "" },
@@ -28,8 +31,32 @@ const timelineData = [
   { year: "2021", img: image12, text: "" },
 ];
 
+// Fallback story content
+const fallbackStoryContent = {
+  title: "Our Story",
+  description: "Laminar Industries (formerly Legris India Pvt.Ltd.) serves diversified industries as a fluid connection solution provider across its key product groups in pneumatics, hydraulics & industrial piping."
+};
+
 function OurStory() {
   const [activeIndex, setActiveIndex] = useState(null);
+
+  // Fetch story content from API
+  const { data: apiStoryContent } = useApiData(
+    "/api/home?type=aboutus-story",
+    null,
+    (data) => {
+      const item = Array.isArray(data) ? data[0] : data;
+      if (!item) return null;
+      return {
+        title: item.title || "Our Story",
+        description: item.description || "",
+      };
+    }
+  );
+
+  // Use API data if available, otherwise use fallback
+  const storyContent = apiStoryContent || fallbackStoryContent;
+  const timelineData = fallbackTimelineData; // Timeline images stay as fallback for now
 
   const toggleImage = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
@@ -45,11 +72,9 @@ function OurStory() {
       }}
     >
       <div className="text-left md:text-center mb-20">
-        <h2 className="text-3xl font-bold">Our Story</h2>
+        <h2 className="text-3xl font-bold">{storyContent.title}</h2>
         <p className="mt-6 text-sm max-w-3xl mx-auto">
-          Laminar Industries (formerly Legris India Pvt.Ltd.) serves diversified industries as a
-          fluid connection solution provider across its key product groups in pneumatics, hydraulics
-          & industrial piping.
+          {storyContent.description}
         </p>
       </div>
 

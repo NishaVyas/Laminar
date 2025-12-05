@@ -1,43 +1,56 @@
+import { NavLink } from "react-router-dom";
+import { useApiData, transformOperations } from "../../hooks/useApiData";
+// Fallback images
 import Operation1 from "../../assets/Homepage/Operation6.jpg";
 import Operation2 from "../../assets/Homepage/Operation7.jpg";
 import Operation3 from "../../assets/Homepage/Operation8.jpg";
 import Operation4 from "../../assets/Homepage/Operation9.jpg";
 import Operation5 from "../../assets/Homepage/Operation10.jpg";
-import { NavLink } from "react-router-dom";
+
+// Fallback operations data (original hardcoded content)
+const fallbackOperations = [
+  {
+    title: "Plastic Tubing Extrusion",
+    description:
+      "Using advanced thermoplastic tubing technology with enhanced flexibility for various applications.",
+    img: Operation1,
+  },
+  {
+    title: "Tube Thermoforming",
+    description:
+      "With cutting-edge and precision engineering, our state-of-the-art manufacturing capabilities ensure high quality and scalable fluid connection solutions across industries.",
+    img: Operation2,
+  },
+  {
+    title: "CNC Machining",
+    description:
+      "Our high-precision CNC machining delivers complex and accurate components, ensuring tight tolerances and superior finishing.",
+    img: Operation4,
+  },
+  {
+    title: "Hose Assembly",
+    description:
+      "From crimping to high-pressure testing, our hose assembly solutions guarantee leak-proof, durable, and industry-compliant connections.",
+    img: Operation3,
+  },
+  {
+    title: "Metal Tube Bending & Assembly",
+    description:
+      "Using multi-axis CNC tube bending, we offer customized metal tubing solutions with high precision for fluid transmission.",
+    img: Operation5,
+  },
+];
 
 const Manufacturing = () => {
-  const operations = [
-    {
-      title: "Plastic Tubing Extrusion",
-      description:
-        "Using advanced thermoplastic tubing technology with enhanced flexibility for various applications.",
-      img: Operation1,
-    },
-    {
-      title: "Tube Thermoforming",
-      description:
-        "With cutting-edge and precision engineering, our state-of-the-art manufacturing capabilities ensure high quality and scalable fluid connection solutions across industries.",
-      img: Operation2,
-    },
-    {
-      title: "CNC Machining",
-      description:
-        "Our high-precision CNC machining delivers complex and accurate components, ensuring tight tolerances and superior finishing.",
-      img: Operation4,
-    },
-    {
-      title: "Hose Assembly",
-      description:
-        "From crimping to high-pressure testing, our hose assembly solutions guarantee leak-proof, durable, and industry-compliant connections.",
-      img: Operation3,
-    },
-    {
-      title: "Metal Tube Bending & Assembly",
-      description:
-        "Using multi-axis CNC tube bending, we offer customized metal tubing solutions with high precision for fluid transmission.",
-      img: Operation5,
-    },
-  ];
+  // Fetch operations data from API with fallback
+  const { data: apiOperations } = useApiData(
+    "/api/home?type=operation",
+    null,
+    transformOperations
+  );
+
+  // Use API data if available, otherwise use fallback
+  const operations = apiOperations || fallbackOperations;
 
   return (
     <section className="py-16 bg-gray-50">

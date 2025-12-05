@@ -1,20 +1,40 @@
 import { useEffect, useState } from "react";
 import Header from "../../layouts/Header";
+import { useApiData, transformBanners } from "../../hooks/useApiData";
+// Fallback images
 import Banner1 from "../../assets/header/Banner1.jpg";
 import Banner2 from "../../assets/header/banner2.jpg";
 import Banner3 from "../../assets/header/banner3.jpg";
 import Banner4 from "../../assets/header/banner4.jpg";
 
+// Fallback data (original hardcoded content)
+const fallbackBannerData = [
+  { image: Banner1, title: "Delivering Trust", desc: "Crafting Excellence" },
+  { image: Banner2, title: "Revolutionizing Industries", desc: "Redefining Standards" },
+  { image: Banner3, title: "Built for Reliability", desc: "Driven by Innovation" },
+  { image: Banner4, title: "Powering connected future", desc: "Pioneering Precision" },
+];
+
 const TopBanner = () => {
-  const banners = [Banner1, Banner2, Banner3, Banner4];
+  // Fetch banner data from API with fallback
+  const { data: apiBanners } = useApiData(
+    "/api/home?type=banner",
+    null,
+    transformBanners
+  );
+
+  // Use API data if available, otherwise use fallback
+  const bannerData = apiBanners || fallbackBannerData;
+  const bannerImages = bannerData.map(b => b.image);
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, [banners.length]);
+  }, [bannerImages.length]);
 
   return (
     <>
@@ -26,7 +46,7 @@ const TopBanner = () => {
         {/* MOBILE VIEW: full image, no crop, no progress bars */}
         <div className="block md:hidden relative">
           <img
-            src={banners[currentIndex]}
+            src={bannerImages[currentIndex]}
             alt="Banner"
             className="w-full h-auto block"
           />
@@ -36,19 +56,14 @@ const TopBanner = () => {
         {/* DESKTOP / LAPTOP VIEW: original style */}
         <div
           className="hidden md:block relative w-full h-screen bg-cover bg-center pt-20 transition-all duration-700 ease-in-out"
-          style={{ backgroundImage: `url(${banners[currentIndex]})` }}
+          style={{ backgroundImage: `url(${bannerImages[currentIndex]})` }}
         >
           <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent z-[5]" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col justify-end h-full">
             {/* Progress bars + text only on md+ */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm pb-8">
-              {[
-                { title: "Delivering Trust", desc: "Crafting Excellence" },
-                { title: "Revolutionizing Industries", desc: "Redefining Standards" },
-                { title: "Built for Reliability", desc: "Driven by Innovation" },
-                { title: "Powering connected future", desc: "Pioneering Precision" },
-              ].map((item, index) => (
+              {bannerData.map((item, index) => (
                 <div
                   key={index}
                   onClick={() => setCurrentIndex(index)}

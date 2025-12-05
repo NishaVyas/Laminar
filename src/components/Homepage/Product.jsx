@@ -1,13 +1,16 @@
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { NavLink } from "react-router-dom";
+import { useApiData, transformProducts } from "../../hooks/useApiData";
+// Fallback images
 import P1 from "../../assets/Homepage/p1.svg";
 import P2 from "../../assets/Homepage/p2.svg";
 import P3 from "../../assets/Homepage/p3.svg";
 import compressed from "../../assets/Product/compressed.jpg";
 import Pipe from "../../assets/Product/Pipe.svg";
 
-const productList = [
+// Fallback product list (original hardcoded content)
+const fallbackProductList = [
   {
     title: "Low Pressure Solutions",
     desc: "Delivering precision-engineered fittings, tubes, and valves, our low-pressure solutions ensure optimal fluid flow and energy efficiency in various industrial applications.",
@@ -34,7 +37,7 @@ const productList = [
   },
   {
     title: "Compressed Air Piping System",
-    desc: "Compressed air and gas aren’t just utilities — they’re critical lifelines in industrial ecosystems. At Laminar, we ensure these lifelines remain pure, dry, and efficient.",
+    desc: "Compressed air and gas aren't just utilities — they're critical lifelines in industrial ecosystems. At Laminar, we ensure these lifelines remain pure, dry, and efficient.",
     image: compressed,
     link: "/compressed-air-and-gas-treatment",
   },
@@ -75,6 +78,16 @@ const Autoplay = (slider) => {
 };
 
 export default function Products() {
+  // Fetch product data from API with fallback
+  const { data: apiProducts } = useApiData(
+    "/api/home?type=product",
+    null,
+    transformProducts
+  );
+
+  // Use API data if available, otherwise use fallback
+  const productList = apiProducts || fallbackProductList;
+
   const [sliderRef, slider] = useKeenSlider(
     {
       loop: true,

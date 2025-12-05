@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
+import { useApiData, transformIndustries } from "../../hooks/useApiData";
+// Fallback images
 import ArrowRight from "../../assets/Homepage/ArrowRight.svg";
 import ArrowLeft from "../../assets/Homepage/ArrowLeft.svg";
 import Automation from "../../assets/Homepage/Automation.jpg";
@@ -18,92 +20,104 @@ import Semiconductor from "../../assets/Homepage/semiconductor.jpeg";
 import DataCenter from "../../assets/Homepage/data-center.jpeg";
 import Renewable from "../../assets/Homepage/renewable-energy.jpeg";
 import Ev from "../../assets/Homepage/ev.jpeg";
+
+// Fallback industries data (original hardcoded content)
+const fallbackIndustries = [
+  {
+    image: Automation,
+    title: "Automation",
+    desc: "Powering industrial automation with pneumatic and hydraulic solutions for seamless motion control and precision engineering.",
+  },
+  {
+    image: automobile2,
+    title: "Automobile",
+    desc: "Delivering advanced fluid solutions for fuel lines, braking systems, and automation, ensuring efficiency and precision in automotive manufacturing.",
+  },
+  {
+    image: Cement,
+    title: "Cement",
+    desc: "Providing heavy-duty fluid connection systems that ensure efficiency and durability in cement production and processing.",
+  },
+  {
+    image: construction,
+    title: "Construction",
+    desc: "Powering industrial automation with precision fluid connectors and precision engineering.",
+  },
+  {
+    image: food,
+    title: "Food & Beverage",
+    desc: "Ensuring hygienic and contamination-free fluid handling with food-grade tubing and high-purity fluid control solutions.",
+  },
+  {
+    image: LifeScience,
+    title: "Life Science",
+    desc: "Supporting medical and pharmaceutical industries with high-purity tubing, precise fluid control, and contamination-free solutions.",
+  },
+  {
+    image: mobile,
+    title: "Mobile Construction",
+    desc: "Optimizing construction machinery with leak-proof, high-strength fluid connectors for uninterrupted performance.",
+  },
+  {
+    image: oilGas,
+    title: "Oil & Gas",
+    desc: "Delivering high-pressure fittings, hoses, and valves designed for safe, efficient, and corrosion-resistant fluid handling.",
+  },
+  {
+    image: Packaging,
+    title: "Packaging",
+    desc: "Delivering precision-engineered fluid connectors for high-speed packaging machinery and automated systems.",
+  },
+  {
+    image: Printing,
+    title: "Printing",
+    desc: "Supporting industrial printing with efficient pneumatic and hydraulic solutions for precise ink and paper handling.",
+  },
+  {
+    image: ProcessIndustry,
+    title: "Process Industry",
+    desc: "Optimizing fluid handling systems for chemical, pharmaceutical, and industrial processing applications.",
+  },
+  {
+    image: Textile,
+    title: "Textile",
+    desc: "Enhancing textile manufacturing with specialized fluid solutions that ensure seamless processing and production efficiency.",
+  },
+  {
+    image: Semiconductor,
+    title: "Semiconductor",
+    desc: "High-performance pneumatic and fluid control solutions offering reliability, speed, and contamination-free operation — from cleanroom-compliant components to precision systems.",
+  },
+  {
+    image: DataCenter,
+    title: "Data center",
+    desc: "High-performance fluid connector solutions engineered for precise, leak-free, and efficient fluid transfer in hyperscale and edge computing environments.",
+  },
+  {
+    image: Renewable,
+    title: "Renewable Energy",
+    desc: "Powering renewable energy with rugged, high-performance fluid and motion solutions—from wind to solar to hydrogen.",
+  },
+  {
+    image: Ev,
+    title: "EV",
+    desc: "Fluid and motion solutions engineered for EV cooling, charging, and high-voltage safety",
+  },
+];
+
 const Industries = () => {
   const scrollRef = useRef(null);
   const cardRef = useRef(null);
 
-  const industries = [
-    {
-      image: Automation,
-      title: "Automation",
-      desc: "Powering industrial automation with pneumatic and hydraulic solutions for seamless motion control and precision engineering.",
-    },
-    {
-      image: automobile2,
-      title: "Automobile",
-      desc: "Delivering advanced fluid solutions for fuel lines, braking systems, and automation, ensuring efficiency and precision in automotive manufacturing.",
-    },
-    {
-      image: Cement,
-      title: "Cement",
-      desc: "Providing heavy-duty fluid connection systems that ensure efficiency and durability in cement production and processing.",
-    },
-    {
-      image: construction,
-      title: "Construction",
-      desc: "Powering industrial automation with precision fluid connectors and precision engineering.",
-    },
-    {
-      image: food,
-      title: "Food & Beverage",
-      desc: "Ensuring hygienic and contamination-free fluid handling with food-grade tubing and high-purity fluid control solutions.",
-    },
-    {
-      image: LifeScience,
-      title: "Life Science",
-      desc: "Supporting medical and pharmaceutical industries with high-purity tubing, precise fluid control, and contamination-free solutions.",
-    },
-    {
-      image: mobile,
-      title: "Mobile Construction",
-      desc: "POptimizing construction machinery with leak-proof, high-strength fluid connectors for uninterrupted performance.",
-    },
-    {
-      image: oilGas,
-      title: "Oil & Gas",
-      desc: "Delivering high-pressure fittings, hoses, and valves designed for safe, efficient, and corrosion-resistant fluid handling.",
-    },
-    {
-      image: Packaging,
-      title: "Packaging",
-      desc: "Delivering precision-engineered fluid connectors for high-speed packaging machinery and automated systems.",
-    },
-    {
-      image: Printing,
-      title: "Printing",
-      desc: "Supporting industrial printing with efficient pneumatic and hydraulic solutions for precise ink and paper handling.",
-    },
-    {
-      image: ProcessIndustry,
-      title: "Process Industry",
-      desc: "Optimizing fluid handling systems for chemical, pharmaceutical, and industrial processing applications.",
-    },
-    {
-      image: Textile,
-      title: "Textile",
-      desc: "Enhancing textile manufacturing with specialized fluid solutions that ensure seamless processing and production efficiency.",
-    },
-     {
-      image: Semiconductor,
-      title: "Semiconductor",
-      desc: "High-performance pneumatic and fluid control solutions offering reliability, speed, and contamination-free operation — from cleanroom-compliant components to precision systems.",
-    },
-    {
-      image: DataCenter,
-      title: "Data center",
-      desc: "High-performance fluid connector solutions engineered for precise, leak-free, and efficient fluid transfer in hyperscale and edge computing environments.",
-    },
-    {
-      image: Renewable,
-      title: "Renewable Energy",
-      desc: "Powering renewable energy with rugged, high-performance fluid and motion solutions—from wind to solar to hydrogen.",
-    },
-    {
-      image: Ev,
-      title: "EV",
-      desc: "Fluid and motion solutions engineered for EV cooling, charging, and high-voltage safety",
-    },
-  ];
+  // Fetch industries data from API with fallback
+  const { data: apiIndustries } = useApiData(
+    "/api/home?type=industry",
+    null,
+    transformIndustries
+  );
+
+  // Use API data if available, otherwise use fallback
+  const industries = apiIndustries || fallbackIndustries;
 
   const scroll = (direction) => {
     if (scrollRef.current && cardRef.current) {

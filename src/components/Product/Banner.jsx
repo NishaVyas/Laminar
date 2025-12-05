@@ -2,14 +2,29 @@ import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import { useEffect } from "react"
 import Header from "../../layouts/Header"
+import { useApiData, transformBanners } from "../../hooks/useApiData"
+// Fallback images
 import banner1 from "../../assets/Product/banner1.jpeg"
 import banner2 from "../../assets/Product/banner2.jpeg"
 import banner3 from "../../assets/Product/banner3.jpeg"
 import banner4 from "../../assets/Product/banner4.jpeg"
 
-const banners = [banner1, banner2, banner3, banner4]
+// Fallback banners (original hardcoded content)
+const fallbackBanners = [banner1, banner2, banner3, banner4]
 
 const Banner = () => {
+  // Fetch product banner data from API
+  const { data: apiBanners } = useApiData(
+    "/api/home?type=product-banner",
+    null,
+    transformBanners
+  )
+
+  // Use API banners if available, otherwise use fallback
+  const banners = apiBanners && apiBanners.length > 0
+    ? apiBanners.map(b => b.image)
+    : fallbackBanners
+
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
     renderMode: "performance",

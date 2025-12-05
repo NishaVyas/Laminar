@@ -1,14 +1,30 @@
 import Header from "../../layouts/Header";
-import Banners from "../../assets/CompressedAir/Banner.svg";
+import { useApiData } from "../../hooks/useApiData";
+// Fallback image
+import FallbackBanner from "../../assets/CompressedAir/Banner.svg";
 
 const Banner = () => {
+    // Fetch banner from API
+    const { data: apiBanner } = useApiData(
+        "/api/home?type=compressed-banner",
+        null,
+        (data) => {
+            const item = Array.isArray(data) ? data[0] : data;
+            if (!item || !item.imageUrl) return null;
+            return item.imageUrl;
+        }
+    );
+
+    // Use API banner if available, otherwise use fallback
+    const bannerImage = apiBanner || FallbackBanner;
+
     return (
         <>
             <Header />
             <section className="relative bg-white">
                 <img
-                    src={Banners}
-                    alt="Pneumatic Banner"
+                    src={bannerImage}
+                    alt="Compressed Air Banner"
                     className="w-full h-auto object-cover"
                 />
             </section>

@@ -1,3 +1,5 @@
+import { useApiData, transformAccreditations } from "../../hooks/useApiData";
+// Fallback images
 import iso from "../../assets/Homepage/iso.svg";
 import iso2 from "../../assets/Homepage/iso2.svg";
 import iso3 from "../../assets/Homepage/iso3.svg";
@@ -7,7 +9,29 @@ import crisil from "../../assets/Homepage/crisil.svg";
 import brics from "../../assets/Homepage/brics.svg";
 import iatf from "../../assets/Homepage/iatf.svg";
 
+// Fallback accreditations data (original hardcoded content)
+const fallbackAccreditations = [
+  { title: "IATF", image: iatf },
+  { title: "ISO 9001", image: iso },
+  { title: "ISO 14001", image: iso2 },
+  { title: "ISO 45001", image: iso3 },
+  { title: "DUNS numbers of Laminar Industries & DUNS Laminar Technologies", image: dun },
+  { title: "DUNS ESG", image: dun2 },
+  { title: "Crisil", image: crisil },
+  { title: "BRICS chamber of commerce & industry", image: brics },
+];
+
 const Recognized = () => {
+  // Fetch accreditations data from API with fallback
+  const { data: apiAccreditations } = useApiData(
+    "/api/home?type=accreditation",
+    null,
+    transformAccreditations
+  );
+
+  // Use API data if available, otherwise use fallback
+  const accreditations = apiAccreditations || fallbackAccreditations;
+
   return (
     <section className="py-10 bg-gray-50">
       <div
@@ -25,104 +49,18 @@ const Recognized = () => {
 
         {/* Accreditations Grid */}
         <div className="grid grid-cols-3 md:grid-cols-4 gap-10 sm:gap-12 pt-4">
-          {/* IATF */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={iatf}
-              alt="IATF"
-              className="h-14 sm:h-16 md:h-12 mb-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs">
-              IATF
-            </p>
-          </div>
-
-          {/* ISO 9001 */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={iso}
-              alt="ISO 9001"
-              className="h-14 sm:h-16 md:h-12 mb-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs">
-              ISO 9001
-            </p>
-          </div>
-
-          {/* ISO 14001 */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={iso2}
-              alt="ISO 14001"
-              className="h-14 sm:h-16 md:h-12 mb-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs">
-              ISO 14001
-            </p>
-          </div>
-
-          {/* ISO 45001 */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={iso3}
-              alt="ISO 45001"
-              className="h-14 sm:h-16 md:h-12 mb-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs">
-              ISO 45001
-            </p>
-          </div>
-
-          {/* DUNS Laminar */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={dun}
-              alt="DUNS Laminar"
-              className="h-12 sm:h-14 md:h-10 mb-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs max-w-sm">
-              DUNS numbers of Laminar Industries &
-            </p>
-            <p className="text-left md:text-center text-gray-900 text-xs max-w-sm">
-              DUNS Laminar Technologies
-            </p>
-          </div>
-
-          {/* DUNS ESG */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={dun2}
-              alt="DUNS ESG"
-              className="h-12 sm:h-14 md:h-10 mb-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs">
-              DUNS ESG
-            </p>
-          </div>
-
-          {/* CRISIL */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={crisil}
-              alt="CRISIL"
-              className="h-6 sm:h-8 md:h-4 mb-4 mt-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs">
-              Crisil
-            </p>
-          </div>
-
-          {/* BRICS */}
-          <div className="flex flex-col items-start md:items-center">
-            <img
-              src={brics}
-              alt="BRICS"
-              className="h-10 sm:h-12 md:h-8 mb-2 md:mx-auto"
-            />
-            <p className="text-left md:text-center text-gray-900 text-xs">
-              BRICS chamber of commerce <br /> &amp; industry
-            </p>
-          </div>
+          {accreditations.map((item, index) => (
+            <div key={index} className="flex flex-col items-start md:items-center">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-14 sm:h-16 md:h-12 mb-2 md:mx-auto"
+              />
+              <p className="text-left md:text-center text-gray-900 text-xs">
+                {item.title}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

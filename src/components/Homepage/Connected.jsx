@@ -1,5 +1,7 @@
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import { useApiData, transformEvents } from "../../hooks/useApiData";
+// Fallback images
 import hm from "../../assets/Homepage/hm.svg";
 import iree from "../../assets/Events/iree-2023.jpeg";
 import expo from "../../assets/Homepage/expo.svg";
@@ -8,33 +10,44 @@ import Calendar from "../../assets/Homepage/Calendar.svg";
 import Map from "../../assets/Homepage/Map.svg";
 import { NavLink } from "react-router-dom";
 
+// Fallback events data (original hardcoded content)
+const fallbackEvents = [
+    {
+        image: hm,
+        title: "Hannover Messe Exhibition 2024",
+        description:
+            "We showcased thermoplastic tubing & hoses for industrial, mobile, and DIY applications, connecting with industry experts from around the world.",
+        details: "Hall 5, Stand A16/1, Hannover Exhibition Ground, Germany",
+        date: "Apr 22nd - 28th, 2024",
+    },
+    {
+        image: iree,
+        title: "IREE 2023",
+        description:
+            "As a key exhibitor, we showcased our railway fluid connection technologies, driving advancements in railway equipment and infrastructure.",
+        details: "Hall A5, Stall 5.86/A, Pragati Maidan, New Delhi",
+        date: "Oct 12th - 14th, 2023",
+    },
+    {
+        image: expo,
+        title: "Automation EXPO 2023",
+        description:
+            "A landmark event where we introduced high-performance fluid automation systems, reinforcing our leadership in industrial automation.",
+        details: "BEC, Hall 1, Goregaon East, Mumbai",
+        date: "August 23rd - 26th, 2023",
+    },
+];
+
 const Connected = () => {
-    const events = [
-        {
-            image: hm,
-            title: "Hannover Messe Exhibition 2024",
-            description:
-                "We showcased thermoplastic tubing & hoses for industrial, mobile, and DIY applications, connecting with industry experts from around the world.",
-            details: "Hall 5, Stand A16/1, Hannover Exhibition Ground, Germany",
-            date: "Apr 22nd - 28th, 2024",
-        },
-        {
-            image: iree,
-            title: "IREE 2023",
-            description:
-                "As a key exhibitor, we showcased our railway fluid connection technologies, driving advancements in railway equipment and infrastructure.",
-            details: "Hall A5, Stall 5.86/A, Pragati Maidan, New Delhi",
-            date: "Oct 12th - 14th, 2023",
-        },
-        {
-            image: expo,
-            title: "Automation EXPO 2023",
-            description:
-                "A landmark event where we introduced high-performance fluid automation systems, reinforcing our leadership in industrial automation.",
-            details: "BEC, Hall 1, Goregaon East, Mumbai",
-            date: "August 23rd - 26th, 2023",
-        },
-    ];
+    // Fetch events data from API with fallback (same as Events page)
+    const { data: apiEvents } = useApiData(
+        "/api/home?type=events",
+        null,
+        transformEvents
+    );
+
+    // Use API data if available, otherwise use fallback
+    const events = apiEvents || fallbackEvents;
 
     const [sliderRef, slider] = useKeenSlider({
         loop: true,

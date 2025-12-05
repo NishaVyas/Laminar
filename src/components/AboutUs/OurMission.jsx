@@ -1,6 +1,32 @@
-import mission from "../../assets/AboutUs/mission.jpg";
+import { useApiData } from "../../hooks/useApiData";
+import missionImg from "../../assets/AboutUs/mission.jpg";
+
+// Fallback mission data (original hardcoded content)
+const fallbackMission = {
+  title: "Our Mission",
+  description: "To build synergetic partnerships with our customers by offering efficient solutions in fluid connections, pneumatic automation and industrial hardware. To grow into new sectors and markets by introducing innovative products and services supplemented with seamless after sales service.",
+  imageUrl: missionImg,
+};
 
 const OurMission = () => {
+  // Fetch mission data from API with fallback
+  const { data: apiMission } = useApiData(
+    "/api/home?type=aboutus-mission",
+    null,
+    (data) => {
+      const item = Array.isArray(data) ? data[0] : data;
+      if (!item) return null;
+      return {
+        title: item.title || "Our Mission",
+        description: item.description || "",
+        imageUrl: item.imageUrl || missionImg,
+      };
+    }
+  );
+
+  // Use API data if available, otherwise use fallback
+  const missionData = apiMission || fallbackMission;
+
   return (
     <section className="bg-gray-50 pt-0 pb-10 md:py-10">
       <div
@@ -12,17 +38,14 @@ const OurMission = () => {
             Our <span className="text-[#0061A6] font-bold">Mission</span>
           </h2>
           <p className="text-gray-700 text-sm leading-relaxed">
-            To build synergetic partnerships with our customers by offering efficient solutions in fluid <br />
-            connections, pneumatic automation and industrial hardware. To grow into new sectors and <br />
-            markets by introducing innovative products and services supplemented with seamless after <br />
-            sales service.
+            {missionData.description}
           </p>
         </div>
 
         {/* Image Column (second on mobile, first on desktop) */}
         <div className="md:w-1/2 flex justify-center md:justify-start order-2 md:order-1">
           <img
-            src={mission}
+            src={missionData.imageUrl}
             alt="Mission Logo"
             className="w-[350px] md:w-[500px] lg:w-[800px] object-contain"
           />

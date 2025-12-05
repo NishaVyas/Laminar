@@ -1,3 +1,5 @@
+import { useApiData, transformIndustries } from "../../hooks/useApiData";
+// Fallback images
 import textiles from "../../assets/Industries/Textile.png";
 import Automobile from "../../assets/Industries/Automobile.png";
 import Cement from "../../assets/Industries/Cement.png";
@@ -12,34 +14,46 @@ import process from "../../assets/Industries/process.png";
 import Automation from "../../assets/Industries/Automation.png";
 import Semiconductor from "../../assets/Industries/semiconductor.jpeg";
 import DataCenter from "../../assets/Industries/data-center.jpeg";
-import  Renewable from "../../assets/Industries/renewable-energy.jpeg";
+import Renewable from "../../assets/Industries/renewable-energy.jpeg";
 import Ev from "../../assets/Industries/ev.jpeg";
+
+// Fallback industries data (original hardcoded content)
+const fallbackIndustries = [
+  { name: "Automation", image: Automation },
+  { name: "Textile", image: textiles },
+  { name: "Automobile", image: Automobile },
+  { name: "Cement", image: Cement },
+  { name: "Construction", image: construction },
+  { name: "Food & Beverage", image: food },
+  { name: "Science", image: science },
+  { name: "Mobile", image: mobile },
+  { name: "Oil", image: oil },
+  { name: "Packaging", image: Packaging },
+  { name: "Printing", image: Printing },
+  { name: "Process", image: process },
+  { name: "Semiconductor", image: Semiconductor },
+  { name: "Data center", image: DataCenter },
+  { name: "Renewable Energy", image: Renewable },
+  { name: "EV", image: Ev },
+];
+
 function Cards() {
-  const industries = [
-    { name: "Automation", image: Automation },
-    { name: "Textile", image: textiles },
-    { name: "Automobile", image: Automobile },
-    { name: "Cement", image: Cement },
-    { name: "Construction", image: construction },
-    { name: "Food & Beverage", image: food },
-    { name: "Science", image: science },
-    { name: "Mobile", image: mobile },
-    { name: "Oil", image: oil },
-    { name: "Packaging", image: Packaging },
-    { name: "Printing", image: Printing },
-    { name: "Process", image: process },
-    { name: "Semiconductor", image: Semiconductor },
-    { name: "Data center", image: DataCenter },
-    { name: "Renewable Energy", image: Renewable },
-    { name: "EV", image: Ev },
-  ];
+  // Fetch industries data from API with fallback
+  const { data: apiIndustries } = useApiData(
+    "/api/home?type=industries-content",
+    null,
+    transformIndustries
+  );
+
+  // Use API data if available, otherwise use fallback
+  const industries = apiIndustries || fallbackIndustries;
 
   return (
     <div
       className="
-        grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 
-        bg-gray-100 
-        px-[calc(var(--spacing)*4)] py-10 
+        grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6
+        bg-gray-100
+        px-[calc(var(--spacing)*4)] py-10
         md:p-20
       "
     >
@@ -50,12 +64,12 @@ function Cards() {
         >
           <img
             src={industry.image}
-            alt={industry.name}
+            alt={industry.name || industry.title}
             className="w-full h-80 object-cover p-4"
           />
           <div className="pt-2 pb-4 px-4">
             <h3 className="text-lg font-semibold text-[#010B1E]">
-              {industry.name}
+              {industry.name || industry.title}
             </h3>
           </div>
         </div>

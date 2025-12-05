@@ -12,6 +12,7 @@ import Buildings from "../../assets/Manufacturing/Buildings.svg";
 import line from "../../assets/Manufacturing/line.svg";
 import hat from "../../assets/Manufacturing/hat.svg";
 import { NavLink } from "react-router-dom";
+import { useApiData } from "../../hooks/useApiData";
 
 // Mapping of application text to corresponding icons
 const applicationIcons = {
@@ -23,8 +24,8 @@ const applicationIcons = {
     "Hydraulic tube assemblies": hat,
 };
 
-// Data for each category
-const categoriesData = [
+// Fallback data for each category
+const fallbackCategoriesData = [
     {
         title: "Thermoplastic Tubing Extrusion",
         heading: "Key Benefits",
@@ -112,7 +113,30 @@ const categoriesData = [
     },
 ];
 
+// Transform API data to match component structure
+const transformFeatures = (apiData) => {
+    if (!Array.isArray(apiData) || apiData.length === 0) return null;
+
+    return apiData.map(item => ({
+        title: item.title || "",
+        heading: item.heading || "Applications",
+        description: item.description || "",
+        applications: item.applications || [],
+        image: item.imageUrl || item.image || "",
+    }));
+};
+
 const Features = () => {
+    // Fetch manufacturing features from API
+    const { data: apiFeatures } = useApiData(
+        "/api/home?type=manufacturing-features",
+        null,
+        transformFeatures
+    );
+
+    // Use API data if available, otherwise use fallback
+    const categoriesData = apiFeatures || fallbackCategoriesData;
+
     return (
         <div className="bg-[#F9FAFB] py-10">
             <div className="max-w-7xl mx-auto px-[calc(var(--spacing)_*_4)] sm:px-4">

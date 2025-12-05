@@ -1,12 +1,91 @@
+import { NavLink } from "react-router-dom";
+import { useApiData } from "../../hooks/useApiData";
+// Fallback images
 import Connectors from "../../assets/Product/connectors.png";
 import Pneumatics from "../../assets/Product/Pneumatics.svg";
 import Hydraulic from "../../assets/Product/hose-2.svg";
 import Pipe from "../../assets/Product/Pipe.svg";
 import brands from "../../assets/Product/logo-laminar.jpg";
 import compressed from "../../assets/Product/compressed.jpg";
-import { NavLink } from "react-router-dom";
+
+// Fallback product categories (original hardcoded content)
+const fallbackCategories = [
+  {
+    slug: "low-pressure-product",
+    title: "Low Pressure Connectors",
+    description: "Fittings, tubing, valves, couplers, guns & accessories for pneumatics & low pressure fluid transfer",
+    image: Connectors,
+    btnText: "See All Products →",
+    bgClass: "bg-[#e6f3fc]",
+    objectFit: "object-contain",
+  },
+  {
+    slug: "pneumatics",
+    title: "Pneumatics",
+    description: "Cylinders, air preparation units & control devices for pneumatic automation",
+    image: Pneumatics,
+    btnText: "See All Products →",
+  },
+  {
+    slug: "hydraulics",
+    title: "Hydraulic Hose & Fittings",
+    description: "Comprehensive range of hydraulic & industrial hose & tube assemblies & fittings",
+    image: Hydraulic,
+    btnText: "See All Products →",
+  },
+  {
+    slug: "transair",
+    title: "Transair Product",
+    description: "Transair piping systems are revolutionary solutions for compressed air, vacuum, and inert gas distribution.",
+    image: Pipe,
+    btnText: "See All Products →",
+    bgClass: "bg-[#e6f3fc]",
+    objectFit: "object-contain",
+  },
+  {
+    slug: "compressed-air-and-gas-treatment",
+    title: "Compressed Air & Gas Treatment",
+    description: "Transair aluminum piping system for efficient distribution of air & inert gases",
+    image: compressed,
+    btnText: "See All Products →",
+  },
+  {
+    slug: "contact-us",
+    title: "Brands",
+    description: "",
+    image: brands,
+    btnText: "Partner With Us →",
+    bgClass: "bg-[#fff]",
+    objectFit: "object-contain",
+    isBrands: true,
+  },
+];
+
+// Transform API products to match component structure
+const transformProducts = (apiData) => {
+  if (!Array.isArray(apiData) || apiData.length === 0) return null;
+
+  return apiData.map(item => ({
+    slug: item.slug || "",
+    title: item.title || "",
+    description: item.description || "",
+    image: item.image || "",
+    btnText: item.btnText || "See All Products →",
+  }));
+};
 
 function Categories() {
+  // Fetch products from API
+  const { data: apiProducts } = useApiData(
+    "/api/product",
+    null,
+    transformProducts
+  );
+
+  // Use API products if available, otherwise use fallback
+  // No merging - show only what's in admin when admin has data
+  const categories = apiProducts && apiProducts.length > 0 ? apiProducts : fallbackCategories;
+
   return (
     <section className="px-[calc(var(--spacing)*4)] sm:px-8 md:px-18 py-18 bg-white">
       <div className="mb-12 text-left md:text-center">
@@ -22,108 +101,24 @@ function Categories() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
-        {/* Row 1 */}
-        <div className="space-y-3">
-          <img
-            src={Connectors}
-            alt="Low Pressure Connectors"
-            className="w-full h-auto md:h-[466px] bg-[#e6f3fc] object-contain"
-          />
-          <h3 className="text-lg font-semibold">Low Pressure Connectors</h3>
-          <p className="text-sm text-gray-600">
-            Fittings, tubing, valves, couplers, guns & accessories for pneumatics & low pressure fluid transfer
-          </p>
-          <button className="bg-[#0061A6] cursor-pointer text-white px-6 py-2 mt-4 hover:bg-[#004d84] w-fit">
-            <NavLink to="/low-pressure-product" className="text-xs">
-              See All Products →
-            </NavLink>
-          </button>
-        </div>
-
-        <div className="space-y-3">
-          <img
-            src={Pneumatics}
-            alt="Pneumatics"
-            className="w-full h-auto md:h-[466px]"
-          />
-          <h3 className="text-lg font-semibold">Pneumatics</h3>
-          <p className="text-sm text-gray-600">
-            Cylinders, air preparation units & control devices for pneumatic automation
-          </p>
-          <button className="bg-[#0061A6] cursor-pointer text-white px-6 py-2 mt-4 hover:bg-[#004d84] w-fit">
-            <NavLink to="/pneumatics" className="text-xs">
-              See All Products →
-            </NavLink>
-          </button>
-        </div>
-
-        {/* Row 2 */}
-        <div className="space-y-3">
-          <img
-            src={Hydraulic}
-            alt="Hydraulic Hose & Fittings"
-            className="w-full h-auto md:h-[466px]"
-          />
-          <h3 className="text-lg font-semibold">Hydraulic Hose & Fittings</h3>
-          <p className="text-sm text-gray-600">
-            Comprehensive range of hydraulic & industrial hose & tube assemblies & fittings
-          </p>
-          <button className="bg-[#0061A6] cursor-pointer text-white px-6 py-2 mt-4 hover:bg-[#004d84] w-fit">
-            <NavLink to="/hydraulics" className="text-xs">
-              See All Products →
-            </NavLink>
-          </button>
-        </div>
-
-        {/* Row 3 */}
-        <div className="space-y-3">
-          <img
-            src={Pipe}
-            alt="Transair Product"
-            className="w-full h-auto md:h-[466px] bg-[#e6f3fc] object-contain"
-          />
-          <h3 className="text-lg font-semibold">Transair Product</h3>
-          <p className="text-sm text-gray-600">
-            Transair piping systems are revolutionary solutions for compressed air, vacuum, and inert gas
-            distribution.
-          </p>
-          <button className="bg-[#0061A6] cursor-pointer text-white px-6 py-2 mt-4 hover:bg-[#004d84] w-fit">
-            <NavLink to="/transair" className="text-xs">
-              See All Products →
-            </NavLink>
-          </button>
-        </div>
-
-        <div className="space-y-3">
-          <img
-            src={compressed}
-            alt="Compressed Air & Gas Treatment"
-            className="w-full h-auto md:h-[466px]"
-          />
-          <h3 className="text-lg font-semibold">Compressed Air & Gas Treatment</h3>
-          <p className="text-sm text-gray-600">
-            Transair aluminum piping system for efficient distribution of air & inert gases
-          </p>
-          <button className="bg-[#0061A6] cursor-pointer text-white px-6 py-2 mt-4 hover:bg-[#004d84] w-fit">
-            <NavLink to="/compressed-air-and-gas-treatment" className="text-xs">
-              See All Products →
-            </NavLink>
-          </button>
-        </div>
-
-        <div className="space-y-4">
-          <img
-            src={brands}
-            alt="Brands"
-            className="w-full h-auto md:h-[466px] bg-[#fff] object-contain"
-          />
-          <h3 className="text-lg font-semibold">Brands</h3>
-          <button className="bg-[#0061A6] cursor-pointer text-white px-6 py-2 mt-6 hover:bg-[#004d84] w-fit">
-            <NavLink to="/contact-us" className="text-xs">
-              Partner With Us →
-            </NavLink>
-          </button>
-        </div>
+        {categories.map((category, index) => (
+          <div key={index} className={category.isBrands ? "space-y-4" : "space-y-3"}>
+            <img
+              src={category.image}
+              alt={category.title}
+              className={`w-full h-auto md:h-[466px] ${category.bgClass || ""} ${category.objectFit || ""}`}
+            />
+            <h3 className="text-lg font-semibold">{category.title}</h3>
+            {category.description && (
+              <p className="text-sm text-gray-600">{category.description}</p>
+            )}
+            <button className={`bg-[#0061A6] cursor-pointer text-white px-6 py-2 ${category.isBrands ? "mt-6" : "mt-4"} hover:bg-[#004d84] w-fit`}>
+              <NavLink to={`/${category.slug}`} className="text-xs">
+                {category.btnText}
+              </NavLink>
+            </button>
+          </div>
+        ))}
       </div>
     </section>
   );

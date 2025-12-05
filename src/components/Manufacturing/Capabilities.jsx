@@ -3,9 +3,10 @@ import Operation2 from "../../assets/Homepage/Operation7.jpg";
 import Operation3 from "../../assets/Homepage/Operation8.jpg";
 import Operation4 from "../../assets/Homepage/Operation9.jpg";
 import Operation5 from "../../assets/Homepage/Operation10.jpg";
+import { useApiData } from "../../hooks/useApiData";
 
-const Capabilities = () => {
-  const operations = [
+// Fallback operations data
+const fallbackOperations = [
     {
       title: "Plastic Tubing Extrusion",
       description:
@@ -36,7 +37,29 @@ const Capabilities = () => {
         "Using multi-axis CNC tube bending, we offer customized metal tubing solutions with high precision for fluid transmission.",
       img: Operation5,
     },
-  ];
+];
+
+// Transform API data to match component structure
+const transformCapabilities = (apiData) => {
+    if (!Array.isArray(apiData) || apiData.length === 0) return null;
+
+    return apiData.map(item => ({
+        title: item.title || "",
+        description: item.description || "",
+        img: item.imageUrl || item.image || "",
+    }));
+};
+
+const Capabilities = () => {
+    // Fetch capabilities from API
+    const { data: apiCapabilities } = useApiData(
+        "/api/home?type=manufacturing-capabilities",
+        null,
+        transformCapabilities
+    );
+
+    // Use API data if available, otherwise use fallback
+    const operations = apiCapabilities || fallbackOperations;
 
   return (
     <section className="py-16 bg-gray-50">

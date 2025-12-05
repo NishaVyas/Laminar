@@ -1,7 +1,9 @@
-import ChooseUs from "../../assets/Manufacturing/chooseUs.svg";
 import { IoIosCheckmark } from "react-icons/io";
+import { useApiData, transformChooseUs } from "../../hooks/useApiData";
+import ChooseUs from "../../assets/Manufacturing/chooseUs.svg";
 
-const advantagesData = [
+// Fallback advantages data (original hardcoded content)
+const fallbackAdvantages = [
     {
         title: "Quality Assurance",
         description: "Every product undergoes rigorous testing to ensure it exceeds industry standards",
@@ -21,6 +23,19 @@ const advantagesData = [
 ];
 
 function Choose() {
+    // Fetch choose us data from API with fallback
+    const { data: apiAdvantages } = useApiData(
+        "/api/home?type=manufacturing-choose-us",
+        null,
+        transformChooseUs
+    );
+
+    // Use API data if available, otherwise use fallback
+    const advantagesData = apiAdvantages || fallbackAdvantages;
+
+    // Get image from first item if available, otherwise use default
+    const chooseUsImage = (apiAdvantages && apiAdvantages[0]?.image) || ChooseUs;
+
     return (
         <div className="bg-[#F9FAFB] py-10 px-[calc(var(--spacing)_*_4)] sm:px-4">
             <div className="max-w-7xl mx-auto">
@@ -56,7 +71,7 @@ function Choose() {
                     {/* Image Section */}
                     <div className="md:w-2/3 mt-10 md:-mt-14">
                         <img
-                            src={ChooseUs}
+                            src={chooseUsImage}
                             alt="Pneumatic Automation"
                             className="w-full max-w-[700px] max-h-[1000px] h-full object-contain"
                         />
