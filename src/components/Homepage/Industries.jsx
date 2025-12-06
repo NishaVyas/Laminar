@@ -116,12 +116,26 @@ const Industries = () => {
   const scrollRef = useRef(null);
   const cardRef = useRef(null);
 
-  // Fetch industries data from API with fallback
-  const { data: apiIndustries } = useApiData(
+  // Fetch industries data from API with fallback (both industry and industries-content types)
+  const { data: industryData } = useApiData(
     "/api/home?type=industry",
     null,
     transformIndustries
   );
+
+  const { data: contentData } = useApiData(
+    "/api/home?type=industries-content",
+    null,
+    transformIndustries
+  );
+
+  // Combine both data sources
+  const apiIndustries = (() => {
+    const industry = industryData || [];
+    const content = contentData || [];
+    const combined = [...industry, ...content];
+    return combined.length > 0 ? combined : null;
+  })();
 
   // Fetch section heading from API
   const { data: sectionHeadingData } = useApiData(

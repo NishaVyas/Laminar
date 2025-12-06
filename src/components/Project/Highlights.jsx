@@ -1,18 +1,18 @@
+import circle from "../../assets/Pneumatic/circle.svg";
 import img1 from "../../assets/Projects/img1.svg";
 import img2 from "../../assets/Projects/img2.svg";
 import img3 from "../../assets/Projects/img3.svg";
 import img4 from "../../assets/Projects/img4.svg";
-import circle from "../../assets/Pneumatic/circle.svg";
+import { useApiData } from "../../hooks/useApiData";
+import { getImageUrl } from "../../config/api";
 
-const categoriesData = [
+const fallbackImages = [img3, img1, img2, img4, img4];
+
+const fallbackData = [
   {
-    description: (
-      <>
-        <strong>Modern Coach Factory</strong> <br />
-        Raebareli, Uttar Pradesh <br />
-        <strong>(2015)</strong>
-      </>
-    ),
+    projectName: "Modern Coach Factory",
+    location: "Raebareli, Uttar Pradesh",
+    year: "2015",
     benefits: [
       "Installed 50 km of pipeline network with 35 bar N2.",
       "Completed cryogenic and compressed air installations.",
@@ -22,13 +22,9 @@ const categoriesData = [
     image: img3,
   },
   {
-    description: (
-      <>
-        <strong>Rail Coach Factory</strong> <br />
-        Kapurthala, Punjab <br />
-        <strong>(2019)</strong>
-      </>
-    ),
+    projectName: "Rail Coach Factory",
+    location: "Kapurthala, Punjab",
+    year: "2019",
     benefits: [
       "Set up compressed air pipelines (1TB to 6TNB).",
       "Implemented high-pressure nitrogen generation for plasma cutting.",
@@ -38,13 +34,9 @@ const categoriesData = [
     image: img1,
   },
   {
-    description: (
-      <>
-        <strong>Fire Hydrant System</strong> <br />
-        Turnkey Fire Safety Solutions <br />
-        <strong>(2020)</strong>
-      </>
-    ),
+    projectName: "Fire Hydrant System",
+    location: "Turnkey Fire Safety Solutions",
+    year: "2020",
     benefits: [
       "Provided complete consultancy services for fire hydrant systems.",
       "Designed and implemented fire hydrant solutions.",
@@ -54,13 +46,9 @@ const categoriesData = [
     image: img2,
   },
   {
-    description: (
-      <>
-        <strong>Chemical Industry</strong> <br />
-        Food and Industrial Gases <br />
-        <strong>(2024)</strong>
-      </>
-    ),
+    projectName: "Chemical Industry",
+    location: "Food and Industrial Gases",
+    year: "2024",
     benefits: [
       "Delivered electro-polished pipeline solutions for the chemical industry.",
       "Designed low RA value pipelines for food and chemical manufacturing.",
@@ -70,13 +58,9 @@ const categoriesData = [
     image: img4,
   },
   {
-    description: (
-      <>
-        <strong>Micron Lab &</strong> <br />
-        Semiconductor Sanand <br />
-        <strong>(2024–25)</strong>
-      </>
-    ),
+    projectName: "Micron Lab & Semiconductor Sanand",
+    location: "Sanand",
+    year: "2024–25",
     benefits: [
       "Installed modular aluminium alloy piping solutions for compressed air.",
       "Executed SS compression and polymer piping systems for vacuum and specialty gases.",
@@ -87,7 +71,35 @@ const categoriesData = [
   },
 ];
 
+const transformHighlights = (apiData) => {
+  if (!Array.isArray(apiData) || apiData.length === 0) return null;
+
+  return apiData.map((item, index) => {
+    // Parse description which is in format: projectName|||location|||year
+    const parts = (item.description || "").split("|||");
+    const projectName = parts[0] || item.title || "";
+    const location = parts[1] || "";
+    const year = parts[2] || "";
+
+    // Get benefits from items array
+    const benefits = item.items?.map(i => i.title) || [];
+
+    // Get image URL or use fallback
+    const image = item.imageUrl ? getImageUrl(item.imageUrl) : fallbackImages[index % fallbackImages.length];
+
+    return {
+      projectName,
+      location,
+      year,
+      benefits,
+      image,
+    };
+  });
+};
+
 const Highlights = () => {
+  const { data: categoriesData } = useApiData("/api/home?type=project-highlight", fallbackData, transformHighlights);
+
   return (
     <div className="py-2">
       <div className="max-w-7xl mx-auto px-[calc(var(--spacing)*4)] md:px-0">
@@ -118,7 +130,9 @@ const Highlights = () => {
                 {/* Description */}
                 <div className="flex-1 mb-4 md:mb-0">
                   <p className="text-[#010B1E] text-lg md:text-xl leading-relaxed">
-                    {category.description}
+                    <strong>{category.projectName}</strong> <br />
+                    {category.location} <br />
+                    <strong>({category.year})</strong>
                   </p>
                 </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useApiData, getImageUrl } from "../../hooks/useApiData";
 import Lambert from "../../assets/AboutUs/Lambert.svg";
 import TridentGroup from "../../assets/Homepage/TridentGroup.svg";
 import Emami from "../../assets/AboutUs/emami.svg";
@@ -18,7 +19,7 @@ import BHEL from "../../assets/Homepage/BHEL.svg";
 import Escorts from "../../assets/AboutUs/Escorts.svg";
 import VolvoTrucks from "../../assets/AboutUs/VolvoTrucks.svg";
 
-const initialLogos = [
+const fallbackLogos = [
   { src: Lambert, alt: "Lambert" },
   { src: TridentGroup, alt: "Trident Group" },
   { src: Emami, alt: "Emami" },
@@ -39,9 +40,38 @@ const initialLogos = [
   { src: VolvoTrucks, alt: "Volvo Trucks" },
 ];
 
+// Transform API data for clients
+const transformClients = (apiData) => {
+  if (!Array.isArray(apiData) || apiData.length === 0) return null;
+  // Get the first record which contains the clients array
+  const record = apiData[0];
+  if (!record.clients || !Array.isArray(record.clients) || record.clients.length === 0) return null;
+
+  return record.clients.map((client) => ({
+    src: getImageUrl(client.logoUrl),
+    alt: client.name || "Client",
+  }));
+};
+
 const Clients = () => {
+  // Fetch clients from API
+  const { data: apiClients } = useApiData(
+    "/api/home?type=clients",
+    null,
+    transformClients
+  );
+
+  // Use API data if available, otherwise use fallback
+  const initialLogos = apiClients || fallbackLogos;
   const [logos, setLogos] = useState(initialLogos);
   const cellRefs = useRef({});
+
+  // Update logos when API data changes
+  useEffect(() => {
+    if (apiClients) {
+      setLogos(apiClients);
+    }
+  }, [apiClients]);
 
   const shuffleMultipleLogos = () => {
     const positions = {};

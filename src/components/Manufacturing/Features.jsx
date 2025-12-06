@@ -117,19 +117,30 @@ const fallbackCategoriesData = [
 const transformFeatures = (apiData) => {
     if (!Array.isArray(apiData) || apiData.length === 0) return null;
 
-    return apiData.map(item => ({
-        title: item.title || "",
-        heading: item.heading || "Applications",
-        description: item.description || "",
-        applications: item.applications || [],
-        image: item.imageUrl || item.image || "",
-    }));
+    return apiData.map(item => {
+        // Handle applications - can be in 'items' array (from admin) or 'applications' array
+        let applications = [];
+        if (item.items && Array.isArray(item.items)) {
+            // Admin saves as items: [{ title: "..." }]
+            applications = item.items.map(i => i.title || "").filter(Boolean);
+        } else if (item.applications && Array.isArray(item.applications)) {
+            applications = item.applications;
+        }
+
+        return {
+            title: item.title || "",
+            heading: item.value || item.heading || "Applications", // Admin saves heading in 'value' field
+            description: item.description || "",
+            applications: applications,
+            image: item.imageUrl || item.image || "",
+        };
+    });
 };
 
 const Features = () => {
-    // Fetch manufacturing features from API
+    // Fetch manufacturing categories from API (admin saves as manufacturing-categories)
     const { data: apiFeatures } = useApiData(
-        "/api/home?type=manufacturing-features",
+        "/api/home?type=manufacturing-categories",
         null,
         transformFeatures
     );

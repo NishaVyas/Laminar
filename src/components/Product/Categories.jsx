@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useApiData } from "../../hooks/useApiData";
+import { useApiData, getImageUrl } from "../../hooks/useApiData";
 // Fallback images
 import Connectors from "../../assets/Product/connectors.png";
 import Pneumatics from "../../assets/Product/Pneumatics.svg";
@@ -7,6 +7,13 @@ import Hydraulic from "../../assets/Product/hose-2.svg";
 import Pipe from "../../assets/Product/Pipe.svg";
 import brands from "../../assets/Product/logo-laminar.jpg";
 import compressed from "../../assets/Product/compressed.jpg";
+
+// Default section heading
+const defaultHeading = {
+  heading: "Our Product",
+  highlightedText: "Categories",
+  description: "Laminar serves diversified end markets in the fluid power segment with its core product categories of low-pressure connectors, pneumatics, hose & fittings, industrial piping & industrial air filtration solutions.",
+};
 
 // Fallback product categories (original hardcoded content)
 const fallbackCategories = [
@@ -65,22 +72,52 @@ const fallbackCategories = [
 const transformProducts = (apiData) => {
   if (!Array.isArray(apiData) || apiData.length === 0) return null;
 
-  return apiData.map(item => ({
-    slug: item.slug || "",
-    title: item.title || "",
-    description: item.description || "",
-    image: item.image || "",
-    btnText: item.btnText || "See All Products →",
-  }));
+  return apiData.map(item => {
+    // Get image URL - item.image contains path like "/uploads/xxx.jpg"
+    // getImageUrl will prepend the backend URL to make it a full URL
+    const imageUrl = item.image ? getImageUrl(item.image) : null;
+
+    return {
+      slug: item.slug || "",
+      title: item.title || "",
+      description: item.description || "",
+      image: imageUrl || Connectors, // Use fallback image if no image from API
+      btnText: item.btnText || "See All Products →",
+      isFromApi: true, // Flag to identify API products
+    };
+  });
+};
+
+// Transform section heading from API
+const transformHeading = (apiData) => {
+  if (!apiData || (Array.isArray(apiData) && apiData.length === 0)) return null;
+  // Get the latest item if array
+  const item = Array.isArray(apiData) ? apiData[apiData.length - 1] : apiData;
+  if (!item) return null;
+  return {
+    heading: item.heading || defaultHeading.heading,
+    highlightedText: item.highlightedText || defaultHeading.highlightedText,
+    description: item.description || defaultHeading.description,
+  };
 };
 
 function Categories() {
+  // Fetch section heading from API
+  const { data: apiHeading } = useApiData(
+    "/api/home?type=product-category-heading",
+    null,
+    transformHeading
+  );
+
   // Fetch products from API
   const { data: apiProducts } = useApiData(
     "/api/product",
     null,
     transformProducts
   );
+
+  // Use API heading if available, otherwise use default
+  const sectionHeading = apiHeading || defaultHeading;
 
   // Use API products if available, otherwise use fallback
   // No merging - show only what's in admin when admin has data
@@ -90,13 +127,11 @@ function Categories() {
     <section className="px-[calc(var(--spacing)*4)] sm:px-8 md:px-18 py-18 bg-white">
       <div className="mb-12 text-left md:text-center">
         <h2 className="text-3xl md:text-4xl">
-          Our Product{" "}
-          <span className="text-[#0061A6] font-bold">Categories</span>
+          {sectionHeading.heading}{" "}
+          <span className="text-[#0061A6] font-bold">{sectionHeading.highlightedText}</span>
         </h2>
         <p className="mt-4 text-gray-600 text-sm mx-0 md:mx-auto">
-          Laminar serves diversified end markets in the fluid power segment with its core product categories
-          of low-pressure connectors, <br className="hidden sm:block" /> pneumatics, hose & fittings, industrial
-          piping & industrial air filtration solutions.
+          {sectionHeading.description}
         </p>
       </div>
 
@@ -113,7 +148,7 @@ function Categories() {
               <p className="text-sm text-gray-600">{category.description}</p>
             )}
             <button className={`bg-[#0061A6] cursor-pointer text-white px-6 py-2 ${category.isBrands ? "mt-6" : "mt-4"} hover:bg-[#004d84] w-fit`}>
-              <NavLink to={`/${category.slug}`} className="text-xs">
+              <NavLink to={category.isFromApi ? `/product/${category.slug}` : `/${category.slug}`} className="text-xs">
                 {category.btnText}
               </NavLink>
             </button>

@@ -42,6 +42,7 @@ function AnimatedRoutes() {
           <Route path="/compressed-air-and-gas-treatment" element={<PageWrapper><CompressedPage /></PageWrapper>} />
           <Route path="/about-us" element={<PageWrapper><AboutUs /></PageWrapper>} />
           <Route path="/products" element={<PageWrapper><ProductPage /></PageWrapper>} />
+          <Route path="/product/:slug" element={<PageWrapper><ProductDetailPage /></PageWrapper>} />
           <Route path="/low-pressure-product" element={<PageWrapper><ProductDetailPage /></PageWrapper>} />
           <Route path="/hydraulics" element={<PageWrapper><HydraulicsPage /></PageWrapper>} />
           <Route path="/parker-product" element={<PageWrapper><ParkerProductPage /></PageWrapper>} />
