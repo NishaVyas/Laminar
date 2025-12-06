@@ -309,6 +309,12 @@ function ProductDetailPage() {
       {conclusionSection && conclusionSection.text && (
         <section className="bg-gray-50 py-12 px-[calc(var(--spacing)*4)] md:px-0">
           <div className="max-w-4xl mx-auto text-left md:text-center">
+            {(conclusionSection.heading || conclusionSection.highlightedText) && (
+              <h2 className="text-3xl md:text-3xl text-gray-900 mb-6">
+                {conclusionSection.heading}{" "}
+                <span className="text-[#0061A6] font-semibold">{conclusionSection.highlightedText}</span>
+              </h2>
+            )}
             <p className="text-base md:text-sm text-gray-700 leading-relaxed">
               {conclusionSection.text}
             </p>

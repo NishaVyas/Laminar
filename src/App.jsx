@@ -23,6 +23,7 @@ const ProductPage = React.lazy(() => import("./pages/ProductPage"));
 const ProductDetailPage = React.lazy(() => import("./pages/ProductDetailPage"));
 const HydraulicsPage = React.lazy(() => import("./pages/HydraulicsPage"));
 const ParkerProductPage = React.lazy(() => import("./pages/ParkerProductPage"));
+const LowPressurePage = React.lazy(() => import("./pages/LowPressurePage"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const Project = React.lazy(() => import("./pages/ProjectPage"));
 const MyProfile = React.lazy(() => import("./pages/MyProfile"));
@@ -43,7 +44,7 @@ function AnimatedRoutes() {
           <Route path="/about-us" element={<PageWrapper><AboutUs /></PageWrapper>} />
           <Route path="/products" element={<PageWrapper><ProductPage /></PageWrapper>} />
           <Route path="/product/:slug" element={<PageWrapper><ProductDetailPage /></PageWrapper>} />
-          <Route path="/low-pressure-product" element={<PageWrapper><ProductDetailPage /></PageWrapper>} />
+          <Route path="/low-pressure-product" element={<PageWrapper><LowPressurePage /></PageWrapper>} />
           <Route path="/hydraulics" element={<PageWrapper><HydraulicsPage /></PageWrapper>} />
           <Route path="/parker-product" element={<PageWrapper><ParkerProductPage /></PageWrapper>} />
           <Route path="/projects" element={<PageWrapper><Project /></PageWrapper>} />
