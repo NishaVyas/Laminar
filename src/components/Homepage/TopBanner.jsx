@@ -15,6 +15,9 @@ const fallbackBannerData = [
   { image: Banner4, title: "Powering connected future", desc: "Pioneering Precision" },
 ];
 
+// Fallback images array for when API images fail to load
+const fallbackImages = [Banner1, Banner2, Banner3, Banner4];
+
 const TopBanner = () => {
   // Fetch banner data from API with fallback
   const { data: apiBanners } = useApiData(
@@ -25,16 +28,27 @@ const TopBanner = () => {
 
   // Use API data if available, otherwise use fallback
   const bannerData = apiBanners || fallbackBannerData;
-  const bannerImages = bannerData.map(b => b.image);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerData.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, [bannerImages.length]);
+  }, [bannerData.length]);
+
+  // Get current image with fallback
+  const getCurrentImage = () => {
+    return bannerData[currentIndex]?.image || fallbackImages[currentIndex % fallbackImages.length];
+  };
+
+  // Handle image load error
+  const handleImageError = (e) => {
+    if (e?.target) {
+      e.target.src = fallbackImages[currentIndex % fallbackImages.length];
+    }
+  };
 
   return (
     <>
@@ -46,9 +60,10 @@ const TopBanner = () => {
         {/* MOBILE VIEW: full image, no crop, no progress bars */}
         <div className="block md:hidden relative">
           <img
-            src={bannerImages[currentIndex]}
+            src={getCurrentImage()}
             alt="Banner"
             className="w-full h-auto block"
+            onError={handleImageError}
           />
           <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent z-[5]" />
         </div>
@@ -56,7 +71,7 @@ const TopBanner = () => {
         {/* DESKTOP / LAPTOP VIEW: original style */}
         <div
           className="hidden md:block relative w-full h-screen bg-cover bg-center pt-20 transition-all duration-700 ease-in-out"
-          style={{ backgroundImage: `url(${bannerImages[currentIndex]})` }}
+          style={{ backgroundImage: `url(${getCurrentImage()})` }}
         >
           <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent z-[5]" />
 

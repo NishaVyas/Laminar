@@ -36,7 +36,7 @@ export function useApiData(endpoint, fallbackData, transformFn = null) {
 
         setError(null);
       } catch (err) {
-        console.warn(`API fetch failed for ${endpoint}, using fallback data:`, err.message);
+        console.warn(`API fetch failed for ${endpoint}:`, err.message);
         setError(err.message);
         // Keep fallback data on error
       } finally {
@@ -56,11 +56,16 @@ export function useApiData(endpoint, fallbackData, transformFn = null) {
 export function transformBanners(apiData) {
   if (!Array.isArray(apiData) || apiData.length === 0) return null;
 
-  return apiData.map(item => ({
-    image: getImageUrl(item.imageUrl),
-    title: item.title || "",
-    desc: item.description || "",
-  }));
+  // Filter out items without valid images and map to frontend structure
+  const validBanners = apiData
+    .filter(item => !!item.imageUrl)
+    .map(item => ({
+      image: getImageUrl(item.imageUrl),
+      title: item.title || "",
+      desc: item.description || "",
+    }));
+
+  return validBanners.length > 0 ? validBanners : null;
 }
 
 /**
