@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import map from "../../assets/Contact/map.svg";
 import email from "../../assets/Contact/email.svg";
 import phone from "../../assets/Contact/phone.svg";
+import { API_BASE_URL } from "../../config/api";
 
 function ContactInfo() {
   const form = useRef();
@@ -14,7 +15,7 @@ function ContactInfo() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/contact`, {
+      const res = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

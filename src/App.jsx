@@ -10,6 +10,7 @@ import ScrollToTop from "./utils/ScrollToTop";
 import Footer from "./layouts/Footer";
 import PageWrapper from "./utils/PageWrapper"
 import Loader from "./utils/Loader";
+import { API_BASE_URL } from "./config/api";
 
 const Homepage = React.lazy(() => import("./pages/Homepage"));
 const PneumaticPage = React.lazy(() => import("./pages/PneumaticPage"));
@@ -67,7 +68,7 @@ function AppContent() {
       localStorage.setItem("laminar_visitor_id", visitorId);
 
       // Only send the request on FIRST visit (new visitor)
-      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/visitors/track-visit`, {
+      fetch(`${API_BASE_URL}/api/visitors/track-visit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 export default function ForgotPasswordPopup({ onClose }) {
     const [step, setStep] = useState(1);
@@ -23,7 +24,7 @@ export default function ForgotPasswordPopup({ onClose }) {
     const sendOtp = async () => {
         setLoading(true);
         try {
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/forgot-password/send-otp`, { email });
+            await axios.post(`${API_BASE_URL}/api/users/forgot-password/send-otp`, { email });
             setStep(2);
             setTimer(30);
         } catch (err) {
@@ -41,7 +42,7 @@ export default function ForgotPasswordPopup({ onClose }) {
         if (enteredOtp.length < 6) return alert("Enter full OTP");
 
         try {
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/forgot-password/verify-otp`, { email, otp: enteredOtp });
+            await axios.post(`${API_BASE_URL}/api/users/forgot-password/verify-otp`, { email, otp: enteredOtp });
             setStep(3);
         } catch (err) {
             alert(err.response?.data?.message || "OTP verification failed");
@@ -55,7 +56,7 @@ export default function ForgotPasswordPopup({ onClose }) {
         setLoading(true);
         if (timer > 0) return;
         try {
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/forgot-password/send-otp`, { email });
+            await axios.post(`${API_BASE_URL}/api/users/forgot-password/send-otp`, { email });
             setTimer(30);
             setResendMsg("OTP resent successfully.");
         } catch (err) {
@@ -73,7 +74,7 @@ export default function ForgotPasswordPopup({ onClose }) {
         if (!password || password !== confirmPassword) return alert("Passwords must match and not be empty.");
 
         try {
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/forgot-password/reset`, { email, newPassword: password, enteredOtp });
+            await axios.post(`${API_BASE_URL}/api/users/forgot-password/reset`, { email, newPassword: password, enteredOtp });
             alert("Password reset successful. Please login.");
             onClose();
         } catch (err) {

@@ -1,7 +1,7 @@
 // API Configuration for Frontend
 // Change this to your production URL when deploying
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5009";
+export const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL || "http://localhost:5009";
 
 // Helper function to get full image URL
 export const getImageUrl = (path) => {

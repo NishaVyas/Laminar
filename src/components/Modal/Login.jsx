@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import ForgotPasswordPopup from "./ForgotPassword";
+import { API_BASE_URL } from "../../config/api";
 
 export default function Login({ onClose, onSwitchToRegister }) {
     const [userData, setUserData] = useState({ email: "", password: "" });
@@ -16,7 +17,7 @@ export default function Login({ onClose, onSwitchToRegister }) {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, userData);
+            const response = await axios.post(`${API_BASE_URL}/api/users/login`, userData);
             if (response.status === 200 || response.status === 201) {
                 const { token, user } = response.data;
                 localStorage.setItem("laminar-token", token);

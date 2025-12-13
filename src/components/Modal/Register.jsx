@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Verification from "./Verification";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 export default function Register({ onClose, onSwitchToLogin }) {
     const [showOtp, setShowOtp] = useState(false);
@@ -21,7 +22,7 @@ export default function Register({ onClose, onSwitchToLogin }) {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/signup/send-otp`, userData);
+            const response = await axios.post(`${API_BASE_URL}/api/users/signup/send-otp`, userData);
             if (response.status === 201 || response.status === 200) {
                 setEmail(userData.email);
                 setShowOtp(true);

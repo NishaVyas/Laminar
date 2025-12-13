@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 export default function Verification({ onClose, email }) {
     const inputsRef = useRef([]);
@@ -52,7 +53,7 @@ export default function Verification({ onClose, email }) {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/users/signup/verify-otp`,
+                `${API_BASE_URL}/api/users/signup/verify-otp`,
                 { email, otp: enteredOtp }
             );
 
@@ -72,7 +73,7 @@ export default function Verification({ onClose, email }) {
         setResendMsg("");
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/users/signup/resend-otp`,
+                `${API_BASE_URL}/api/users/signup/resend-otp`,
                 { email }
             );
 
